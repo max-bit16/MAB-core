@@ -69,7 +69,12 @@ Avant toute recherche externe, tu lis systématiquement le contenu du dossier `s
 ### PARTIE 1 — Overview contexte pays
 - Analyse PESTEL synthétique (politique, économique, social, technologique, environnemental, légal)
 - Cartographie des indicateurs socio-économiques clés (PIB, population, urbanisation, pouvoir d'achat, secteur BTP)
-- Relations commerciales et culturelles avec la France (proximité, barrières, opportunités)
+- **Relations économiques et culturelles avec la France** — analyse courte et structurée obligatoire :
+  - Volume et nature des échanges commerciaux bilatéraux (exports/imports, solde, tendances)
+  - Présence française dans le pays (IDE, filiales, entreprises françaises implantées)
+  - Proximité ou distance culturelle (langue, histoire, influences, perception des produits français)
+  - Barrières spécifiques à l'entrée pour une entreprise française (réglementaires, culturelles, linguistiques)
+  - Opportunités liées à l'origine française (image de marque, réseaux, accords commerciaux)
 - **Tendances d'investissement** : qui investit (État, UE, privé, fonds internationaux), dans quels secteurs (santé, éducation, infrastructure, industrie, etc.), montants et dynamiques
 
 ### PARTIE 2 — Marché de la construction
@@ -107,6 +112,39 @@ Analyser chacun des segments suivants — photo actuelle + dynamique + tendances
 - Spécificités produit : habitudes d'achat, produits dominants, préférences techniques et culturelles
 - Part de marché estimée par segment ERP
 - Dynamique et perspectives
+
+#### Méthode d'estimation obligatoire — Taille marché robinetterie collective (Parties 5 & 6)
+
+Si aucune donnée locale sourcée n'est disponible sur la taille du marché robinetterie (générale ou collective), appliquer **obligatoirement** la méthode d'extrapolation suivante :
+
+**Formule :**
+```
+(PIB/hab [PAYS] / PIB/hab France) × (Population [PAYS] / Population France) = Coefficient X
+X × 140,3 M USD = Estimation marché robinetterie collective [PAYS] en USD
+```
+
+**Constantes de référence (à sourcer et mettre à jour à chaque étude) :**
+- Marché robinetterie sanitaire collective France 2024 : **120 M€ / 140,3 M USD** (source interne Presto — base de référence)
+- PIB/hab France 2025 : **48 982 USD** (Worldometer)
+- Population France 2025 : **69,1 millions** (Worldometer)
+- Règle empirique : **~2 €/habitant** pour le marché robinetterie collective en France
+
+**Variables à sourcer pour chaque pays (Worldometer, FMI, Banque Mondiale) :**
+- PIB/hab [PAYS] en USD — année la plus récente disponible
+- Population [PAYS] — année la plus récente disponible
+- Taux de change local/EUR ou local/USD si pertinent
+
+**Présentation obligatoire dans le document :**
+- Afficher le calcul étape par étape
+- Mentionner explicitement : *"Estimation par extrapolation — fiabilité moyenne. À confirmer par données sectorielles ou terrain."*
+- Indiquer le niveau de confiance : Élevé (données macro fiables) / Moyen (PIB/hab peu représentatif) / Faible (économie très informelle ou atypique)
+- Si une donnée locale existe, la privilegier et indiquer l'écart avec l'estimation extrapolée
+
+**Limites à mentionner systématiquement :**
+- La méthode ne capte pas la part d'économie informelle (ex. Turquie ~30%, Inde ~50%)
+- Elle ne reflète pas les spécificités sectorielles locales (ex. boom construction publique, culture de rénovation)
+- La volatilité des taux de change peut fausser la comparaison en USD
+- Elle donne une taille marché globale — la segmentation par ERP nécessite d'appliquer les ratios français en les pondérant par les spécificités locales
 
 ### PARTIE 7 — Concurrents
 - Analyse obligatoire de **Delabie** en premier (positionnement, présence locale, parts de marché, forces/faiblesses)
