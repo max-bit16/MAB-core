@@ -42,18 +42,31 @@ Avant toute recherche externe, tu lis systématiquement le contenu du dossier `s
 
 ---
 
-## Skills à utiliser
+## Agents et Skills à utiliser
+
+### Agents (~/.claude/agents/) — sous-agents spécialisés
+
+| Section | Agent |
+|---|---|
+| 1. PESTEL / Contexte pays + Investissements | `business-analyst` |
+| 2. Construction + 3. Non-résidentiel | `trend-analyst` |
+| 4. Segments ERP | `market-researcher` + `research-analyst` |
+| 5. Marché robinetterie générale | `market-researcher` |
+| 6. Marché robinetterie collective | `market-researcher` + `research-analyst` |
+| 7. Concurrents | `competitive-analyst` |
+| Tous pays non-anglophones (turc, arabe, bulgare, roumain…) | `search-specialist` en amont |
+| Orchestration générale + croisement sources internes/externes | `research-analyst` |
+
+### Skills (~/.claude/skills/) — en support des agents
 
 | Section | Skills |
 |---|---|
-| 1. PESTEL / Contexte pays + Investissements | `market-research` + `firecrawl-cli` |
-| 2. Construction | `market-research` + `firecrawl-cli` |
-| 3. Non-résidentiel | `market-research` + `firecrawl-cli` |
-| 4. Segments | `market-researcher-agent` + `firecrawl-cli` |
-| 5. Marché robinetterie générale | `market-researcher-agent` + `firecrawl-cli` |
-| 6. Marché robinetterie collective | `market-researcher-agent` + `competitive-market-research` + `firecrawl-cli` |
-| 7. Concurrents | `competitive-market-research` + `competitor-profiling` |
-| 8. Normes & Certifications | `investigate` + `firecrawl-cli` |
+| Toutes sections | `firecrawl-cli` (scraping live) |
+| 1. PESTEL | `market-research` |
+| 4, 5, 6. Marchés | `market-researcher-agent` |
+| 6. Robinetterie collective | `competitive-market-research` |
+| 7. Concurrents | `competitor-profiling` |
+| 8. Normes & Certifications | `investigate` |
 
 ---
 
