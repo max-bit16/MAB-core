@@ -379,12 +379,74 @@ Section dédiée aux données incertaines ou non confirmées, à revalider :
 
 ---
 
-## Workflow de lancement
+## Workflow de lancement — PREP → BUILD
 
-Quand l'utilisateur lance `MAB [PAYS]` :
+`MAB [PAYS]` déclenche **obligatoirement** une pré-étude documentaire avant toute rédaction.
 
-1. **Lecture sources internes** — scanner `sources-internes/` pour données disponibles sur le pays
-2. **Questions de clarification** — poser toutes les questions nécessaires avant de commencer
-3. **Recherche section par section** — dans l'ordre du plan, en utilisant les agents et skills appropriés
-4. **Production des documents** — générer les 2 fichiers Word en Calibri dans `pays/[pays]/outputs/`
-5. **Confirmation** — signaler la fin et lister les données non disponibles
+---
+
+### PHASE 1 — MAB PREP [PAYS]
+
+**Objectif** : débroussailler le terrain et rassembler la matière brute avant de commencer l'étude. PREP produit un corpus de départ qui donnera une longueur d'avance à BUILD.
+
+**Output** : fichier `pays/[pays]/MAB_[PAYS]_PREP.md`
+
+**Agents à utiliser :**
+
+| Tâche | Agent / Skill |
+|---|---|
+| Périmètre pays, langue, segments ERP, sources internes disponibles | `clarify` |
+| Exploration profonde par thème | `investigate` |
+| Recherche web ciblée et navigation | `browse` |
+| Crawl sites institutionnels, fédérations, distributeurs, concurrents | `firecrawl-cli` |
+| Extraction structurée des données | `extract` |
+| Cadrage TAM/SAM/SOM et segmentation | `market-researcher-agent` |
+| Concurrents + market-entry | `competitive-market-research` |
+| Fiches Delabie, Grohe, Hansgrohe, Geberit, distributeurs | `competitor-profiling` |
+| Vérification sources et trous | `guard` + `qa-only` |
+| Pays non-anglophones (turc, arabe, néerlandais, bulgare…) | `search-specialist` en priorité |
+
+**Tâches de collecte obligatoires :**
+1. Vérifier si les produits Presto sont référencés dans les répertoires officiels locaux
+2. Chercher des cahiers des charges publics réels contenant les normes locales, temporisateurs, anti-vandalisme
+3. Identifier des appels d'offres récents (hôpitaux / écoles / prisons / piscines) avec lots sanitaires
+4. Mapper les distributeurs avec preuve de référencement (Presto, Delabie, Grohe, Hansgrohe)
+5. Chercher dans toutes les langues du pays
+6. Trouver des indices de CA, effectifs ou présence locale des concurrents clés
+7. Extraire des exemples de prix publics ou catalogues B2B
+8. Distinguer explicitement : données confirmées / estimées / anciennes / contradictoires / introuvables
+
+**Structure du fichier MAB_[PAYS]_PREP.md :**
+```
+# MAB PREP — [Pays]
+## 1. Executive source map
+## 2. Hard-to-find findings
+## 3. Country & macro evidence
+## 4. Construction & non-résidentiel
+## 5. ERP segments
+## 6. Market sizing inputs
+## 7. Competitor & distributor evidence
+## 8. Norms & certifications
+## 9. Tender / procurement examples
+## 10. Open questions
+## 11. Confidence matrix
+| Donnée | Valeur trouvée | Source | Niveau de confiance | À revérifier |
+```
+
+**Critère de passage PREP → BUILD :**
+- Sections critiques (marché, concurrents, normes) : minimum 60% de données confirmées ou estimées avec méthode
+- Si < 60% : relancer une deuxième passe PREP ciblée sur les gaps
+- Sauvegarder le fichier PREP avant de lancer BUILD
+
+---
+
+### PHASE 2 — MAB BUILD [PAYS]
+
+**Objectif** : produire les deux documents Word en suivant le plan MAB complet (Parties 1 à 9). BUILD utilise le fichier PREP + les sources internes comme base de départ, et complète par recherche active si nécessaire. Les agents gardent leur pleine capacité de recherche.
+
+1. **Lecture PREP** — lire `pays/[pays]/MAB_[PAYS]_PREP.md`
+2. **Lecture sources internes** — scanner `sources-internes/` pour données disponibles sur le pays
+3. **Questions de clarification** — poser toutes les questions nécessaires avant de commencer
+4. **Recherche section par section** — dans l'ordre du plan, en utilisant les agents et skills appropriés, en partant de la matière PREP
+5. **Production des documents** — générer les 2 fichiers Word en Calibri dans `pays/[pays]/outputs/`
+6. **Confirmation** — signaler la fin et lister les données non disponibles
