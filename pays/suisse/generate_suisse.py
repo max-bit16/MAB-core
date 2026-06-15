@@ -1,9 +1,13 @@
 """
-MAB Suisse v1 — Génération des deux documents Word
+MAB Suisse v2 — Génération des deux documents Word
 Sources internes utilisées :
   - MAB_Suisse_PREP.md (corpus PREP, juin 2026)
   - Analyse Marché Sanitaire Lieux public France.pdf (base extrapolation FR, déc. 2024)
   - EMAE - Extrapolation, notes de recherche.docx (données construction CH)
+  - CH_Bathrooms_Full_Report_2020.pdf (BRG Building Solutions, juil. 2020) — Estimation B
+    → Total taps & mixers CH 2019 : 120,10 M CHF / 108,20 M EUR (MSP)
+    → Non-Housing (ERP) : 4,71% volume (52 500 unités)
+    → Self-Closing : 1 080 u / 0,14 M CHF ; Electronic : 5 530 u / 1,08 M CHF
 """
 from docx import Document
 from docx.shared import Pt, RGBColor, Cm
@@ -343,7 +347,7 @@ doc.add_paragraph()
 add_heading(doc, "PARTIE 5 — TAILLE MARCHÉ : ROBINETTERIE GÉNÉRALE", 1)
 
 add_heading(doc, "5.1 Taille et valeur — Estimation A (base Analyse de Marché France)", 2)
-add_note(doc, "Aucune source publique ne recense la taille exacte du marché suisse de la robinetterie. Estimation par extrapolation depuis la France (protocole MAB). Pas d'étude BRG Suisse disponible : Estimation B non calculable.")
+add_note(doc, "Aucune source publique ne recense la taille exacte du marché suisse de la robinetterie. Deux estimations présentées : Estimation A (extrapolation depuis France) + Estimation B (BRG CH 2020, données directes). Source BRG : CH_Bathrooms_Full_Report_2020.pdf — périmètre taps & mixers toutes applications (cuisine + sanitaire, résidentiel + non-résidentiel).")
 add_heading(doc, "Constantes de référence", 2)
 make_table(doc, [
     ["Variable", "Valeur", "Source"],
@@ -369,8 +373,49 @@ make_table(doc, [
 doc.add_paragraph()
 add_note(doc, "Ajustement +12% justifié : PIB/hab très élevé (1,8× France), marché premium avec exigences qualité élevées, prix CHF supérieurs aux prix EUR, culture d'entretien et de renouvellement rigoureuse en Suisse. Estimation par extrapolation — fiabilité moyenne — à confirmer terrain (Meier Tobler, Suissetec, SVGW).")
 
-add_heading(doc, "Estimation B — Base Études BRG", 2)
-add_para(doc, "[DONNÉE NON DISPONIBLE — Aucune étude BRG spécifique à la Suisse n'a été identifiée dans les sources internes ou externes. L'unique étude BRG disponible en sources internes couvre la Belgique (BE_Bathrooms_Full_Report_2020.pdf). L'Estimation B ne peut pas être calculée. À demander : europe@brgbuildingsolutions.com]")
+add_heading(doc, "Estimation B — Base BRG CH 2020 (données directes Suisse)", 2)
+add_para(doc, "Source : CH_Bathrooms_Full_Report_2020.pdf, BRG Building Solutions, juillet 2020. Données base année 2019 (dernière année pré-COVID disponible).")
+make_table(doc, [
+    ["Segment (BRG 2019)", "Volume (unités)", "Valeur MSP CHF", "Valeur MSP EUR"],
+    ["Bath Taps and Mixers", "137 000", "17,71 M CHF", "15,95 M EUR"],
+    ["Bidet Taps and Mixers", "5 900", "0,64 M CHF", "0,58 M EUR"],
+    ["Kitchen Taps and Mixers", "248 500", "22,62 M CHF", "20,38 M EUR"],
+    ["Shower Taps and Mixers", "227 000", "29,46 M CHF", "26,54 M EUR"],
+    ["Washbasin Taps and Mixers", "496 000", "49,67 M CHF", "44,75 M EUR"],
+    ["TOTAL taps & mixers CH (2019)", "1 114 400", "120,10 M CHF", "108,20 M EUR"],
+])
+doc.add_paragraph()
+add_para(doc, "Répartition par end-use (volume 2019) :")
+make_table(doc, [
+    ["End-Use", "Volume", "% total", "Commentaire"],
+    ["Housing RMI (rénovation résidentielle)", "867 520", "77,85%", "Moteur principal du marché"],
+    ["New Housing (neuf résidentiel)", "194 390", "17,44%", "En légère baisse 2019"],
+    ["Non-Housing (ERP/collectif)", "52 500", "4,71%", "Hôpitaux, écoles, hôtels, transports"],
+])
+doc.add_paragraph()
+add_para(doc, "Types ERP dominants dans Non-Housing (volume 2019) :")
+make_table(doc, [
+    ["Type", "Volume", "MSP CHF/unité", "Valeur M CHF", "% total marché"],
+    ["Self-Closing (temporisés)", "1 080", "131,46 CHF", "0,14 M CHF", "0,10%"],
+    ["Electronic (infrarouge)", "5 530", "194,59 CHF", "1,08 M CHF", "0,50%"],
+    ["One Head (mitigeurs)", "1 001 510", "103,79 CHF", "103,95 M CHF", "89,87%"],
+    ["Thermostatic", "79 330", "156,29 CHF", "12,40 M CHF", "7,12%"],
+])
+doc.add_paragraph()
+add_note(doc, "LECTURE BRG — Le périmètre BRG est plus large que la 'robinetterie de collectivités' de l'analyse France : il inclut cuisine + sanitaire, résidentiel + non-résidentiel. Le segment Non-Housing = 4,71% en volume. Les self-closing et electronic (segments Presto) ne représentent que 0,60% du volume total — très faible part apparente, car le BRG mesure l'ensemble du marché résidentiel qui est massif. La valeur ERP réelle est supérieure à ce ratio (prix unitaires ERP ~1,8× supérieurs à la moyenne).")
+doc.add_paragraph()
+add_para(doc, "Mise à jour 2019 → 2024 : volume 2024 prévu 1 086 800 unités (-2,5% vs 2019). Prix MSP : hausse de ~3%/an sur 5 ans = +16%. Valeur estimée 2024 : 120,10 × 0,975 × 1,16 ≈ 136 M CHF ≈ 129 M EUR. (Hypothèse — à confirmer.)")
+make_table(doc, [
+    ["", "Estimation A (extrapolation France)", "Estimation B (BRG CH direct)"],
+    ["Périmètre", "Robinetterie collective ERP uniquement", "Toutes taps & mixers (cuisine + sanitaire, résidentiel + ERP)"],
+    ["Base / source", "Analyse Marché France déc. 2024 (÷ 2)", "BRG CH_Bathrooms_Full_Report_2020"],
+    ["Année de référence", "France 2024 extrapolée", "Suisse 2019"],
+    ["Valeur totale (taps)", "64–79 M€ (~67–83 M CHF)", "120,10 M CHF (108 M EUR) — 2019"],
+    ["Valeur estimée 2024", "—", "~136 M CHF (~129 M EUR)"],
+    ["Comparaison", "Estimation A ≈ 52–65% de B", "B plus large : résidentiel inclus"],
+    ["Niveau de confiance", "Moyen (extrapolation)", "Élevé (mesure directe industrie)"],
+])
+add_note(doc, "Réconciliation A vs B : l'écart (A = 64–79 M€ ; B total = ~129 M EUR) s'explique par le périmètre différent. B inclut le résidentiel (95% du marché). La part Non-Housing (4,71%) de B = ~6,1 M EUR valeur nominale, mais corrigée du premium prix ERP (~×1,8) → ~11 M EUR. L'Estimation A (26,5–33 M€ robinetterie collective stricte) reste la référence pour le périmètre Presto. B confirme un marché total CH substantiel et un prix moyen MSP élevé (108 CHF/unité vs ~85 EUR en France estimé).")
 doc.add_paragraph()
 
 add_heading(doc, "5.2 Spécificités produit du marché suisse", 2)
@@ -407,8 +452,10 @@ doc.add_paragraph()
 add_heading(doc, "PARTIE 6 — TAILLE MARCHÉ : ROBINETTERIE COLLECTIVE ERP", 1)
 
 add_heading(doc, "6.1 Taille et valeur du marché robinetterie collective ERP", 2)
-add_bullet(doc, "[DONNÉE NON DISPONIBLE — Aucune donnée directe sur la taille du marché robinetterie collective ERP en Suisse. Estimations ci-dessous par extrapolation depuis France (méthode MAB). À confirmer via Meier Tobler, Suissetec, SVGW ou études sectorielles.]")
-add_bullet(doc, "Estimation robinetterie ERP Suisse (collectivités strictes) : 26,5–33 M€ (~28–35 M CHF) selon Méthode 1. Périmètre élargi (collectivités + WC + douches) : 64–79 M€ (~67–83 M CHF).")
+add_bullet(doc, "Aucune donnée directe publique sur la taille du marché robinetterie collective ERP en Suisse. Deux méthodes d'estimation présentées ci-dessous. À confirmer via Meier Tobler, Suissetec, SVGW ou études sectorielles.")
+add_bullet(doc, "Méthode 1 (extrapolation France) — robinetterie collective stricte : 26,5–33 M€ (~28–35 M CHF). Périmètre élargi (collectivités + WC + douches) : 64–79 M€ (~67–83 M CHF).")
+add_bullet(doc, "Méthode 2 (BRG CH 2020, part Non-Housing 4,71% ajustée prix premium ERP ×1,80) : ~9–11 M€ (~9,5–11,5 M CHF). Borne basse — BRG mesure les ventes fabricants et peut sous-estimer les circuits professionnels ERP.")
+add_bullet(doc, "Fourchette large retenue : 10–33 M€ — à affiner terrain (Meier Tobler, Suissetec). Marché total taps & mixers CH (BRG 2019, toutes applications) : 120,10 M CHF / 108,20 M EUR.")
 
 add_heading(doc, "6.2 Méthode d'extrapolation — Détail du calcul", 2)
 add_para(doc, "Méthode 1 — base Analyse de Marché France (source interne Presto, déc. 2024)")
@@ -428,21 +475,29 @@ make_table(doc, [
 ])
 doc.add_paragraph()
 
-add_para(doc, "Méthode 2 — base Études BRG")
-add_para(doc, "[DONNÉE NON DISPONIBLE — Aucune étude BRG Suisse disponible. Méthode 2 non calculable. Fourchette finale retenue : 26,5–33 M€ (Méthode 1 uniquement). Niveau de confiance : MOYEN. À confirmer terrain.]")
+add_para(doc, "Méthode 2 — base BRG CH 2020 (Part Non-Housing appliquée au marché total)")
+make_table(doc, [
+    ["Étape", "Calcul", "Résultat"],
+    ["Total taps & mixers CH (BRG 2019)", "CH_Bathrooms_Full_Report_2020, p.102", "120,10 M CHF = 108,20 M EUR"],
+    ["Part Non-Housing en volume (BRG 2019)", "52 500 / 1 114 400", "4,71%"],
+    ["Valeur Non-Housing nominale", "120,10 M CHF × 4,71%", "5,66 M CHF ≈ 5,10 M EUR"],
+    ["Ajustement prix premium ERP", "Self-closing 131 CHF/u + electronic 195 CHF/u vs moy. 108 CHF/u → ratio ~1,80×", "× 1,80"],
+    ["Estimation ERP valeur ajustée", "5,66 M CHF × 1,80", "~10,2 M CHF ≈ 9,1 M EUR"],
+    ["Mise à jour 2019 → 2024 (prix +16%)", "9,1 M EUR × 1,16", "~10,6 M EUR ≈ 11 M CHF"],
+    ["Estimation Méthode 2 (ERP collectif CH)", "—", "~9–11 M EUR ≈ 9,5–11,5 M CHF"],
+])
 doc.add_paragraph()
 
 make_table(doc, [
-    ["", "Méthode 1 (base France ÷ 2)", "Méthode 2 (base BRG Suisse)"],
-    ["Base robinetterie collectivités", "100–125 M€ (France, déc. 2024)", "NON DISPONIBLE"],
-    ["Coefficient", "0,265 (ajusté +12%)", "N/A"],
-    ["Estimation", "26,5–33,1 M€ (~28–35 M CHF)", "N/A"],
-    ["Fourchette retenue", "26,5–33 M€", "N/A"],
-    ["Niveau de confiance", "Moyen", "N/A"],
-    ["Fourchette finale consolidée", "26,5–33 M€ — niveau de confiance MOYEN", ""],
+    ["", "Méthode 1 (base France ÷ 2)", "Méthode 2 (base BRG CH 2020)"],
+    ["Base robinetterie collectivités", "100–125 M€ (France, déc. 2024)", "120,10 M CHF (BRG, 2019 — toutes taps CH)"],
+    ["Coefficient / Part ERP", "0,265 (ajusté +12%)", "4,71% Non-Housing × 1,80 prix premium"],
+    ["Estimation ERP (rob. collective)", "26,5–33,1 M€ (~28–35 M CHF)", "~9–11 M EUR (~9,5–11,5 M CHF, 2024)"],
+    ["Niveau de confiance", "Moyen (extrapolation)", "Moyen-élevé (BRG direct, ajustement prix)"],
+    ["Fourchette finale retenue", "26,5–33 M€ (Méthode 1 — périmètre Presto)", "9–11 M€ (Méthode 2 — borne basse)"],
 ])
 doc.add_paragraph()
-add_note(doc, "Limites : méthode ne capte pas l'économie informelle (quasi-nulle en Suisse → biais limité). Ne reflète pas les spécificités sectorielles locales. Volatilité CHF/EUR peut fausser la comparaison. Ajustement +12% repose sur hypothèses à confirmer terrain (Meier Tobler, installateurs).")
+add_note(doc, "Interprétation de l'écart M1 vs M2 : l'écart important (26–33 M€ vs 9–11 M€) s'explique par des périmètres différents. M1 extrapole depuis la France un marché ERP spécialisé (produits temporisés, anti-vandalisme, PMR) qui inclut des circuits professionnels non capturés par BRG. M2 (BRG) mesure les ventes déclarées par les fabricants, dont la part 'non-housing' peut être sous-estimée (certains produits ERP achetés via circuits résidentiels). La réalité du marché robinetterie collective Suisse se situe vraisemblablement dans une fourchette large : 10–33 M€. Terrain à confirmer via Meier Tobler et Suissetec. Limites communes : volatilité CHF/EUR ; économie informelle quasi-nulle en Suisse (biais minimal).")
 
 add_heading(doc, "6.3 Évaluation du potentiel par segment ERP — Scoring", 2)
 make_table(doc, [
@@ -573,7 +628,8 @@ add_para(doc, "Données incertaines ou manquantes à revalider par recherche com
 doc.add_paragraph()
 
 bold_bullet(doc, "Certification SVGW des produits Presto", "Les commerciaux terrain ont-ils des produits certifiés SVGW ? Si non, c'est la priorité #1 avant tout développement commercial significatif. Contact : info@svgw.ch | +41 44 288 33 33.")
-bold_bullet(doc, "Taille de marché robinetterie collective CH", "Aucune donnée directe. À obtenir via Meier Tobler (demande confidentielle), SVGW, Suissetec. Alternative : commander l'étude BRG Suisse si elle existe (europe@brgbuildingsolutions.com).")
+bold_bullet(doc, "Taille de marché robinetterie collective CH", "BRG CH 2020 donne le total taps CH (120 M CHF) et la part Non-Housing (4,71%). Estimation B = 9–11 M EUR (borne basse). Estimation A = 26–33 M€. Fourchette large 10–33 M€. À affiner via Meier Tobler ou Suissetec (déclaration ventes ERP). Mise à jour BRG post-2020 à demander : europe@brgbuildingsolutions.com")
+bold_bullet(doc, "Ajustement prix premium ERP ×1,80 dans Méthode 2", "Hypothèse basée sur ratio MSP self-closing (131 CHF/u) + electronic (195 CHF/u) vs moyenne marché (108 CHF/u). À valider via catalogues Meier Tobler ou Delabie CH. Facteur multiplicateur sensible : impact direct sur l'Estimation B.")
 bold_bullet(doc, "Ajustement structurel +12%", "Hypothèse à confirmer par interviews terrain (Meier Tobler, installateurs). Variables utilisées : marché premium, culture entretien, prix CHF. Tester aussi avec PIB/hab en PPA.")
 bold_bullet(doc, "Données scolaires actualisées", "Le parc scolaire (~11 700 établissements) est daté de 2017/18. Actualiser via OFS : bfs.admin.ch/fr/home/statistiques/education-science/institutions-eleves-etudiants.html")
 bold_bullet(doc, "Dépenses sport % PIB Suisse", "Non disponibles via Eurostat (CH hors UE). Chercher via OFS (statistiques sport) ou OFSPO (Office fédéral du sport, osp.admin.ch).")
@@ -589,7 +645,7 @@ doc.add_paragraph()
 # Sauvegarde
 path_etude = os.path.join(OUTPUT_DIR, "MAB_Suisse_Etude.docx")
 doc.save(path_etude)
-print(f"✓ Étude v1 sauvegardée : {path_etude}")
+print(f"✓ Étude v2 sauvegardée : {path_etude}")
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -663,8 +719,10 @@ for i, (title, url, lang, date) in enumerate(sources, 1):
 
 ann.add_paragraph()
 
-add_heading(ann, "ANNEXE 2 — CALCUL DÉTAILLÉ EXTRAPOLATION MARCHÉ ROBINETTERIE SUISSE", 1)
-ann.add_paragraph("Source base France : Analyse de Marché France — Équipements Sanitaires Automatiques pour Lieux Publics, Presto, décembre 2024. Marché total France 2024 : 485-550 M€ HT.").runs[0].font.italic = True
+add_heading(ann, "ANNEXE 2 — DONNÉES DE MARCHÉ ROBINETTERIE SUISSE : ESTIMATION A + ESTIMATION B (BRG)", 1)
+
+# --- Estimation A ---
+ann.add_paragraph("ESTIMATION A — Extrapolation depuis France (Analyse de Marché France, Presto, déc. 2024. Marché total France 2024 : 485–550 M€ HT.)").runs[0].font.italic = True
 ann.add_paragraph()
 make_table(ann, [
     ["Paramètre", "Valeur", "Source"],
@@ -685,10 +743,44 @@ make_table(ann, [
     ["Robinetterie de collectivités", "100–125 M€", "× 0,265", "26,5–33,1 M€", "~28–35 M CHF"],
     ["Chasses d'eau & WC collectifs", "90–110 M€", "× 0,265", "23,9–29,2 M€", "~25–31 M CHF"],
     ["Douches & équipements connexes", "52–65 M€", "× 0,265", "13,8–17,2 M€", "~14–18 M CHF"],
-    ["TOTAL", "242–300 M€", "× 0,265", "64,1–79,4 M€", "~67–83 M CHF"],
+    ["TOTAL Estimation A", "242–300 M€", "× 0,265", "64,1–79,4 M€", "~67–83 M CHF"],
 ])
 ann.add_paragraph()
-ann.add_paragraph("Justification ajustement structurel +12% : (1) PIB/hab suisse 1,8× la France → pouvoir d'achat et prix acceptés bien supérieurs ; (2) Marché premium avec exigences qualité élevées sur ERP publics ; (3) Culture d'entretien et de renouvellement rigoureuse ; (4) Prix en CHF supérieurs aux prix EUR à qualité équivalente. Hypothèse à confirmer via entretiens terrain (Meier Tobler, installateurs Suissetec).").runs[0].font.size = Pt(9)
+ann.add_paragraph("Justification +12% : PIB/hab 1,8× France, marché premium, prix CHF supérieurs, culture entretien rigoureuse. À confirmer terrain.").runs[0].font.size = Pt(9)
+ann.add_paragraph()
+
+# --- Estimation B (BRG CH) ---
+ann.add_paragraph("ESTIMATION B — BRG CH_Bathrooms_Full_Report_2020 (juillet 2020, données 2019). Mesure directe des ventes fabricants en Suisse (taps & mixers, cuisine + sanitaire, tous end-uses).").runs[0].font.italic = True
+ann.add_paragraph()
+make_table(ann, [
+    ["Segment BRG (2019)", "Volume (unités)", "MSP CHF/u", "Valeur MSP CHF", "Valeur MSP EUR"],
+    ["Bath Taps and Mixers", "137 000", "129,25", "17,71 M CHF", "15,95 M EUR"],
+    ["Bidet Taps and Mixers", "5 900", "108,72", "0,64 M CHF", "0,58 M EUR"],
+    ["Kitchen Taps and Mixers", "248 500", "91,03", "22,62 M CHF", "20,38 M EUR"],
+    ["Shower Taps and Mixers", "227 000", "129,76", "29,46 M CHF", "26,54 M EUR"],
+    ["Washbasin Taps and Mixers", "496 000", "100,15", "49,67 M CHF", "44,75 M EUR"],
+    ["TOTAL (2019)", "1 114 400", "107,77 moy.", "120,10 M CHF", "108,20 M EUR"],
+])
+ann.add_paragraph()
+make_table(ann, [
+    ["End-Use (2019)", "Volume", "%", "Valeur nominale (proportionnelle)"],
+    ["Housing RMI", "867 520", "77,85%", "93,5 M CHF"],
+    ["New Housing", "194 390", "17,44%", "20,9 M CHF"],
+    ["Non-Housing (ERP)", "52 500", "4,71%", "5,66 M CHF"],
+])
+ann.add_paragraph()
+make_table(ann, [
+    ["Type (2019)", "Volume", "% vol.", "MSP CHF/u", "Valeur M CHF"],
+    ["Electronic (infrarouge)", "5 530", "0,50%", "194,59", "1,08"],
+    ["Self-Closing (temporisés)", "1 080", "0,10%", "131,46", "0,14"],
+    ["Thermostatic", "79 330", "7,12%", "156,29", "12,40"],
+    ["One Head (mitigeurs)", "1 001 510", "89,87%", "103,79", "103,95"],
+    ["Two Head", "26 270", "2,36%", "94,48", "2,40"],
+])
+ann.add_paragraph()
+ann.add_paragraph("Calcul Estimation B (robinetterie collective ERP) : Non-Housing 4,71% × 120,10 M CHF = 5,66 M CHF → ajustement prix ERP ×1,80 (self-closing 131 CHF/u + electronic 195 CHF/u vs moy. 108 CHF/u) = 10,2 M CHF → mise à jour 2019→2024 (prix +16%) = ~11,8 M CHF ≈ ~11 M EUR. Fourchette retenue : 9–11 M EUR.").runs[0].font.size = Pt(9)
+ann.add_paragraph()
+ann.add_paragraph("Prévision volume 2024 (BRG p.110) : 1 086 800 unités (-2,5% vs 2019). Valeur estimée 2024 toutes taps CH : ~136 M CHF / ~129 M EUR (hypothèse prix +3%/an sur 5 ans).").runs[0].font.size = Pt(9)
 ann.add_paragraph()
 
 add_heading(ann, "ANNEXE 3 — DONNÉES CONSTRUCTION SUISSE 2024-2026", 1)
@@ -791,17 +883,17 @@ make_table(ann, [
     ["Estimation rob. collective CH (adj.)", "26,5–33 M€", "Extrapolation × 0,265", "Moyenne", "Confirmer terrain"],
     ["Nombre campings CH", "NON DISPONIBLE", "—", "—", "OFS tourisme / TCS"],
     ["Taille marché rob. CH (directe)", "NON DISPONIBLE", "—", "—", "Meier Tobler / terrain"],
-    ["Étude BRG Suisse", "NON DISPONIBLE", "—", "—", "BRG Building Solutions"],
+    ["Étude BRG Suisse (CH_Bathrooms_Full_Report_2020)", "Total taps CH 2019 : 120,10 M CHF / 108,20 M EUR. Non-Housing 4,71%. Self-closing 1 080u/0,14 M CHF. Electronic 5 530u/1,08 M CHF.", "BRG Building Solutions, juil. 2020, p.102/109/103", "Très haute (données directes fabricants)", "Mise à jour post-2020 ; segmentation ERP fine à affiner"],
 ], font_size=8)
 ann.add_paragraph()
 
 # Sauvegarde annexes
 path_ann = os.path.join(OUTPUT_DIR, "MAB_Suisse_Annexes.docx")
 ann.save(path_ann)
-print(f"✓ Annexes v1 sauvegardées : {path_ann}")
+print(f"✓ Annexes v2 sauvegardées : {path_ann}")
 print()
 print("═" * 60)
-print("MAB SUISSE v1 — Génération terminée")
+print("MAB SUISSE v2 — Génération terminée")
 print(f"  Étude   → {path_etude}")
 print(f"  Annexes → {path_ann}")
 print("═" * 60)
