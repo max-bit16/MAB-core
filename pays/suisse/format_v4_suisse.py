@@ -24,12 +24,12 @@ OUT_DIR = os.path.join(os.path.dirname(__file__), "outputs")
 JOBS = [
     {
         "src": os.path.join(OUT_DIR, "MAB_Suisse_Etude.docx"),
-        "dst": os.path.join(OUT_DIR, "MAB_Suisse_EtudeV4_mise_en_page.docx"),
+        "dst": os.path.join(OUT_DIR, "MAB_Suisse_EtudeV3.docx"),
         "break_prefix": "PARTIE",
     },
     {
         "src": os.path.join(OUT_DIR, "MAB_Suisse_Annexes.docx"),
-        "dst": os.path.join(OUT_DIR, "MAB_Suisse_AnnexesV4.docx"),
+        "dst": os.path.join(OUT_DIR, "MAB_Suisse_annexesV3.docx"),
         "break_prefix": "ANNEXE",
     },
 ]
