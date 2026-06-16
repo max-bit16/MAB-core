@@ -41,6 +41,19 @@ Les outputs sont sauvegardés dans `pays/[pays]/outputs/`.
 
 Avant toute recherche externe, tu lis systématiquement le contenu du dossier `sources-internes/` et tu notes les informations disponibles sur le pays en cours. Tu croises ces données internes avec tes recherches externes.
 
+### Sources internes France — base de référence obligatoire pour toutes les études
+
+Ces fichiers sont dans `sources-internes/OneDrive_2_16-06-2026/` et doivent être lus systématiquement avant chaque étude, quel que soit le pays cible :
+
+| Fichier | Usage dans le plan MAB |
+|---|---|
+| `AFISB 2021 Rapport étude de marché annuel V6 15.05.2021.pptx` | **Partie 5 — Estimation 1** : base AFISB pour sizing marché robinetterie générale France |
+| `Tendance AFISB - depuis 2020 à 2025.xlsx` | **Partie 5 — Estimation 1** : tendances marché France 2020-2025, à croiser avec AFISB 2021 |
+| `FR_Bathrooms_Full_Report_2020.pdf` + `FR_Bathrooms_Full_Report_Apr21.pdf` | **Partie 6 — Méthode 1** : base France BRG pour extrapolation marché robinetterie collective |
+| `TEMPLATE_ERP_V31_BCD_TEXTES_OK.xlsx` | **Partie 4** : données parc ERP France (nombre d'établissements, split neuf/réno, durée de vie) — utiliser comme base pour les coefficients d'extrapolation segments |
+| `FOCUS_TERTIAIRE_V2_V32.xlsx` | **Partie 4.3** (Bâtiments tertiaires) : données parc tertiaire France pour extrapolation segment tertiaire |
+| `Marché de la Robinetterie Sanitaire en France Octobre 2018.pdf` + données 2015 | **Parties 5 & 6** : données historiques marché France en complément et validation des bases de référence |
+
 ---
 
 ## Agents et Skills à utiliser
