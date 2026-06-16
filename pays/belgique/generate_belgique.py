@@ -1,5 +1,5 @@
 """
-MAB Belgique v3 — Génération des deux documents Word
+MAB Belgique v5 — Génération des deux documents Word
 Sources internes utilisées :
   - MAB - Cas Belgique.md (référence cas)
   - Analyse Marché Sanitaire Lieux public France.pdf (base extrapolation FR, déc. 2024)
@@ -92,7 +92,7 @@ def set_margins(doc):
 doc = Document()
 set_margins(doc)
 
-t = doc.add_heading("MAB BELGIQUE — ÉTUDE DE MARCHÉ v3", 0)
+t = doc.add_heading("MAB BELGIQUE — ÉTUDE DE MARCHÉ v5", 0)
 t.alignment = WD_ALIGN_PARAGRAPH.CENTER
 sub = doc.add_paragraph("Robinetterie sanitaire collective / ERP — Les Robinets Presto")
 sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -153,16 +153,17 @@ doc.add_paragraph()
 
 add_heading(doc, "1.4 Tendances d'investissement — Programmes clés", 2)
 make_table(doc, [
-    ["Programme", "Secteur", "Budget", "Calendrier", "Opportunité Presto"],
-    ["Hôpitaux universitaires FWB", "Santé", "438 M€", "2024-2028", "Gamme hospitalière (Temposoft, Tempostop, PMR)"],
-    ["Santé mentale Z.org (BEI 120M€)", "Santé", "270 M€", "2026-2040", "Robinets anti-arrachement, temporisateurs"],
-    ["Bâtiments scolaires FWB", "Éducation", "1 Md€", "2023-2028+", "Temporisateurs push-button, électroniques"],
-    ["Logements sociaux Flandre (BEI)", "Logement social", "1,7 Md€", "→2042", "Robinetterie logements collectifs"],
-    ["Logements sociaux Wallonie", "Logement social", "1,2 Md€", "→2030", "Robinetterie, économiseurs d'eau"],
-    ["Plan prisons (5 nouvelles)", "Pénitentiaire", "500+ M€", "2025-2030", "Inox anti-vandalisme, encastrés"],
-    ["Complexe sportif piscine Bruxelles", "Sport & loisirs", "nd", "2025-2027", "Temporisateurs douche, push-button"],
-    ["Infrasports Wallonie", "Sport & loisirs", "nd (annuel)", "Récurrent", "Équipements piscines, gymnases"],
-    ["BEI Belgique 2025 (total)", "Multi-secteurs", "2,6 Md€", "2025", "Infrastructure sociale, transition verte"],
+    ["Programme", "But global", "Secteur", "Budget", "Calendrier", "Opportunité Presto (types produits)"],
+    ["Hôpitaux universitaires FWB", "Modernisation et extension des CHU wallons et bruxellois", "Santé", "438 M€", "2024-2028", "Robinetterie temporisée hospitalière, anti-brûlure, PMR"],
+    ["Santé mentale Z.org (BEI 120M€)", "Rénovation et création d'unités psychiatriques modernes en Flandre", "Santé", "270 M€", "2026-2040", "Robinetterie anti-arrachement, temporisateurs encastrés"],
+    ["Bâtiments scolaires FWB", "Rénovation énergétique et accessibilité du parc scolaire wallon et bruxellois", "Éducation", "1 Md€", "2023-2028+", "Robinetterie temporisée push-button, électronique sans contact"],
+    ["Programme DBSO (Flandre)", "Construction et rénovation de centaines d'établissements scolaires flamands", "Éducation", "3,2 Md€", "Pluriannuel", "Robinetterie temporisée, économiseurs d'eau"],
+    ["Logements sociaux Flandre (BEI)", "Rénovation du parc social flamand aux standards énergétiques contemporains", "Logement social", "1,7 Md€", "→2042", "Robinetterie collective, économiseurs de débit"],
+    ["Logements sociaux Wallonie", "Rénovation et construction de logements sociaux en Wallonie", "Logement social", "1,2 Md€", "→2030", "Robinetterie collective, économiseurs d'eau"],
+    ["Plan prisons (5 nouvelles)", "Désengorgement du système carcéral belge par construction de nouvelles prisons", "Pénitentiaire", "500+ M€", "2025-2030", "Robinetterie inox anti-vandalisme, encastrée"],
+    ["Complexe sportif + piscine Bruxelles", "Création d'un pôle sportif public de proximité dans la région bruxelloise", "Sport & loisirs", "nd", "2025-2027", "Robinetterie temporisée douche, push-button piscine"],
+    ["Infrasports Wallonie", "Subvention annuelle aux communes pour équipements sportifs collectifs", "Sport & loisirs", "nd (annuel)", "Récurrent", "Équipements piscines, gymnases, temporisateurs"],
+    ["BEI Belgique 2025 (total)", "Financement de la transition verte et des infrastructures sociales belges", "Multi-secteurs", "2,6 Md€", "2025", "Infrastructure sociale, transition verte — tous types"],
 ], font_size=8)
 doc.add_paragraph()
 
@@ -189,9 +190,11 @@ add_bullet(doc, "Rénovation énergétique : 80% du parc à rénover (Embuild). 
 add_bullet(doc, "Génie civil : seul segment performant 2023-2024 (+4-5%/an), en décélération en 2025.")
 
 add_heading(doc, "2.3 Perspectives 2026-2030", 2)
-add_bullet(doc, "ING : +0,7% en 2026, +0,8% en 2027 (construction totale). Bâtiments : +0,2% / +0,5% (reprise lente).")
+add_bullet(doc, "ING : +0,7% en 2026, +0,8% en 2027 (construction totale). Bâtiments : +0,2% / +0,5% (reprise lente). ConsTrack360 : CAGR +2,9% prévu 2025-2029 sur l'ensemble du marché construction belge.")
 add_bullet(doc, "GlobalData / Research And Markets : +1,6% en 2026 — tirée par énergie, infrastructures électriques et projets commerciaux.")
-add_bullet(doc, "Tendances structurelles : bâtiments durables (PEB), BIM/préfabrication, rénovation/circularité (Allianz Trade).")
+add_bullet(doc, "Tendances structurelles : bâtiments durables (PEB/EPBD), BIM/préfabrication, rénovation/circularité. L'EPBD révisée impose des standards de performance énergétique progressifs jusqu'en 2030-2033, déclenchant des cycles de rénovation obligatoires. (Allianz Trade / Commission européenne)")
+add_bullet(doc, "Logement social : 2,9 Md€ engagés (1,7 Md€ Flandre BEI + 1,2 Md€ Wallonie SWL) → flux de rénovation sécurisé pour la robinetterie collective sur 2025-2042. Signal de stabilité contra-cyclique.")
+add_bullet(doc, "Risques modérateurs : mesures de rigueur gouvernement Arizona (jan. 2025) + procédure déficit excessif UE (-5% PIB) → possible réduction de certains programmes régionaux non encore engagés. Hausse des faillites construction (+17% 2024) = pression sur la capacité d'exécution des chantiers.")
 doc.add_paragraph()
 
 # ─── PARTIE 3 ────────────────────────────────────────────────────────────────
@@ -212,6 +215,22 @@ make_table(doc, [
     ["Rénovation non-résidentielle", "-2,1% (2024) mais rebond en cours", "Autorisations +8,7% — signal positif"],
 ])
 add_note(doc, "Estimation dynamique neuf/rénov. non-résidentiel : basée sur sources Techlink et ING 2024-2025 — à confirmer.")
+doc.add_paragraph()
+
+add_heading(doc, "3.3 Segments dominants du non-résidentiel", 2)
+add_bullet(doc, "Santé et éducation : segments publics planifiés, pipelines multi-annuels engagés et visibles (cf. Partie 1.4). Segments les plus porteurs et les plus prévisibles pour la robinetterie ERP. Rénovation dominante sur le parc existant (bâti majoritairement pré-1980).")
+add_bullet(doc, "Bureaux et tertiaire : reprise post-COVID (+1,4% 2024). Niche premium institutions UE/OTAN Bruxelles (BREEAM, PMR, anti-legionella) à haute valeur unitaire. Demande peu cyclique sur le segment institutionnel.")
+add_bullet(doc, "Logistique et industrie légère : en expansion continue. E-commerce, pharma/biotech, relocalisation industrielle. Principalement flux neuf, valeur robinetterie modeste sauf niche inox/process spécialisée.")
+add_bullet(doc, "Pénitentiaire : segment hors-cycle économique — construit sur décision politique (surpopulation carcérale critique). Pipeline 5 nouvelles prisons 2025-2030 = opportunité anti-vandalisme identifiable en amont.")
+add_bullet(doc, "[DONNÉE NON DISPONIBLE — part exacte de chaque sous-segment en % et valeur € du marché non-résidentiel total belge — à sourcer via Embuild (embuild.be) ou Statbel]")
+
+add_heading(doc, "3.4 Perspectives 2025-2030", 2)
+add_bullet(doc, "Non-résidentiel neuf : +1,5% attendu 2025 (ING), tiré par les projets santé, éducation et repositionnement logistique. Moteur principal : pipelines publics engagés (Partie 1.4) qui représentent plusieurs milliards € d'investissements certains.")
+add_bullet(doc, "Rénovation non-résidentielle : signal de rebond — autorisations +8,7% en 2024 (Techlink/ING 2025), impact attendu sur les marchés de robinetterie ERP à horizon 12-18 mois (2025-2026).")
+add_bullet(doc, "EPBD révisée (Energy Performance of Buildings Directive) : obligation de rénovation progressive du parc non-résidentiel public vers 2028-2033 — driver structurel majeur pour la robinetterie économe en eau certifiée (PLAGE/UREBA en Belgique). Les bâtiments publics sont prioritaires.")
+add_bullet(doc, "Risques : contexte de rigueur budgétaire Arizona + procédure déficit excessif UE → possible ralentissement de programmes régionaux non encore contractualisés. Effets modérés sur pipelines déjà engagés par convention. Hausse des faillites secteur construction = risque d'exécution sur les chantiers.")
+add_bullet(doc, "Perspectives CAGR non-résidentiel Belgique : +1,5–2,0%/an estimé (2025-2029), en ligne avec la dynamique construction totale ConsTrack360 (+2,9% CAGR) mais avec une croissance légèrement inférieure en raison du poids de la rénovation résidentielle. Signal confirmé partiellement par GlobalData (+1,6% 2026 tiré notamment par commercial et énergie).")
+add_note(doc, "Estimation perspectives 3.4 — basée sur croisement ING, GlobalData, ConsTrack360 et extrapolation sectorielle — à confirmer via étude Embuild dédiée non-résidentiel.")
 doc.add_paragraph()
 
 # ─── PARTIE 4 ────────────────────────────────────────────────────────────────
@@ -298,7 +317,7 @@ add_heading(doc, "4.12 Opportunités Presto par segment — Synthèse", 2)
 add_note(doc, "Classement par potentiel décroissant. Score 1 (très faible) à 5 (très fort).")
 make_table(doc, [
     ["Segment", "Score", "Produits Presto", "Arguments clés", "Canal"],
-    ["4.2 Santé", "5/5", "Temposoft, Tempostop, PMR, anti-brûlure", "Hygiène, BELGAQUA, normes hospitalières", "BET santé + distributeurs spécialisés"],
+    ["4.2 Santé", "5/5", "Robinetterie temporisée hospitalière, anti-brûlure, PMR", "Hygiène, BELGAQUA, normes hospitalières", "BET santé + distributeurs spécialisés"],
     ["4.1 Éducation", "4/5", "Temporisateurs push-button, électroniques", "Économie eau PLAGE/UREBA, robustesse", "AO publics, négoce pro"],
     ["4.8 Pénitentiaire", "4/5", "Inox anti-vandalisme, encastrés", "Indestructibilité, zéro entretien, anti-arrachement", "Régie des Bâtiments, prescription directe"],
     ["4.5 CHR / Hôtels", "3/5", "Thermostatiques, design, économiseurs", "Montée en gamme, durabilité, pression constante", "Distributeurs CHR, architectes"],
@@ -318,7 +337,7 @@ doc.add_paragraph()
 add_heading(doc, "PARTIE 5 — TAILLE MARCHÉ : ROBINETTERIE GÉNÉRALE", 1)
 
 add_heading(doc, "5.1 Taille et valeur — Double estimation", 2)
-add_note(doc, "Aucune source publique ne recense la taille exacte du marché belge de la robinetterie. Deux estimations par extrapolation, présentées côte à côte (protocole MAB v3).")
+add_note(doc, "Aucune source publique ne recense la taille exacte du marché belge de la robinetterie. Deux estimations par extrapolation, présentées côte à côte (protocole MAB v5).")
 
 add_heading(doc, "Constantes de référence", 2)
 make_table(doc, [
@@ -540,7 +559,7 @@ doc.add_paragraph()
 # Sauvegarde
 path_etude = os.path.join(OUTPUT_DIR, "MAB_Belgique_Etude.docx")
 doc.save(path_etude)
-print(f"✓ Étude v3 sauvegardée : {path_etude}")
+print(f"✓ Étude v5 sauvegardée : {path_etude}")
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -549,7 +568,7 @@ print(f"✓ Étude v3 sauvegardée : {path_etude}")
 ann = Document()
 set_margins(ann)
 
-t2 = ann.add_heading("MAB BELGIQUE — ANNEXES & SOURCES v3", 0)
+t2 = ann.add_heading("MAB BELGIQUE — ANNEXES & SOURCES v5", 0)
 t2.alignment = WD_ALIGN_PARAGRAPH.CENTER
 sub2 = ann.add_paragraph("Sources complètes, données brutes et compléments — Les Robinets Presto")
 sub2.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -558,7 +577,7 @@ sub2.runs[0].font.name = FONT
 ann.add_paragraph()
 
 add_heading(ann, "ANNEXE 1 — LISTE DES SOURCES UTILISÉES", 1)
-ann.add_paragraph("Toutes les sources consultées pour MAB_Belgique_Etude.docx v3 :").runs[0].font.italic = True
+ann.add_paragraph("Toutes les sources consultées pour MAB_Belgique_Etude.docx v5 :").runs[0].font.italic = True
 ann.add_paragraph()
 
 sources = [
@@ -727,10 +746,10 @@ ann.add_paragraph()
 # Sauvegarde annexes
 path_ann = os.path.join(OUTPUT_DIR, "MAB_Belgique_Annexes.docx")
 ann.save(path_ann)
-print(f"✓ Annexes v3 sauvegardées : {path_ann}")
+print(f"✓ Annexes v5 sauvegardées : {path_ann}")
 print()
 print("═" * 60)
-print("MAB BELGIQUE v3 — Génération terminée")
+print("MAB BELGIQUE v5 — Génération terminée")
 print(f"  Étude   → {path_etude}")
 print(f"  Annexes → {path_ann}")
 print("═" * 60)
