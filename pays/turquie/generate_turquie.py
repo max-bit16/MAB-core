@@ -96,7 +96,7 @@ def set_margins(doc):
 doc = Document()
 set_margins(doc)
 
-t = doc.add_heading("MAB TURQUIE — ÉTUDE DE MARCHÉ v1", 0)
+t = doc.add_heading("MAB TURQUIE — ÉTUDE DE MARCHÉ v2", 0)
 t.alignment = WD_ALIGN_PARAGRAPH.CENTER
 sub = doc.add_paragraph("Robinetterie sanitaire collective / ERP — Les Robinets Presto")
 sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -343,71 +343,56 @@ doc.add_paragraph()
 add_heading(doc, "PARTIE 5 — TAILLE MARCHÉ : ROBINETTERIE GÉNÉRALE", 1)
 
 add_heading(doc, "5.1 Taille et valeur du marché robinetterie", 2)
-add_note(doc, "Deux estimations présentées côte à côte (protocole MAB v8). Estimation 1 = extrapolation depuis la base France (AFISB/source interne Presto). Estimation 2 = données directes BRG TR Apr21 (données 2020, périmètre taps & mixers toutes applications, cuisine + sanitaire, résidentiel + non-résidentiel).")
+add_note(doc, "Structure v8 stricte : deux estimations côte à côte. Estimation 1 = base AFISB France extrapolée avec le coefficient brut X. Estimation 2 = données directes BRG Turquie, sans extrapolation. L'ajustement structurel n'est appliqué qu'en Partie 6.")
 
 add_heading(doc, "Constantes de référence et coefficient d'extrapolation", 2)
 make_table(doc, [
     ["Variable", "Valeur", "Source"],
-    ["PIB/hab France 2025", "48 982 USD", "Worldometer (constante MAB)"],
-    ["Population France 2025", "69,1 M", "Worldometer (constante MAB)"],
+    ["PIB/hab France 2025", "48 982 USD", "Worldometer (constante MAB v8)"],
+    ["Population France 2025", "69,1 M", "Worldometer (constante MAB v8)"],
     ["PIB/hab Turquie 2025", "18 611 USD (fourchette 18 200-18 611)", "IMF WEO 10/2025 / Worldometer"],
     ["Population Turquie 2025", "85,5 M", "Source interne / TurkStat"],
-    ["Coefficient brut X", "(18 611 / 48 982) × (85,5 / 69,1) = 0,380 × 1,237 = 0,470", "Calcul MAB"],
-    ["Ajustement structurel", "-10% (économie informelle significative, marché extrêmement price-driven, partiellement compensé par cycle de remplacement plus court — 12 ans vs >20 ans en Europe)", "Hypothèse MAB — à confirmer terrain"],
-    ["Coefficient ajusté", "0,470 × 0,90 = 0,423", "Calcul MAB"],
-    ["Taux de change", "≈51 TRY/EUR (2026) — dépréciation continue -27%/an", "ECB eurofxref 02/2026"],
+    ["Coefficient brut X", "(18 611 / 48 982) × (85,5 / 69,1) = 0,380 × 1,237 = 0,470", "Calcul MAB v8"],
+    ["Taux de change indicatif", "≈51 TRY/EUR (2026) — dépréciation continue -27%/an", "ECB eurofxref 02/2026"],
 ])
 doc.add_paragraph()
 
-add_heading(doc, "Estimation 1 — base \"Analyse de Marché France\" / AFISB (source interne Presto)", 2)
+add_heading(doc, "Estimation 1 — base AFISB France (sections A1/B1)", 2)
+add_para(doc, "Source AFISB utilisée : AFISB 2021 Rapport étude de marché annuel V6 (15/05/2021) + Tendance AFISB - depuis 2020 à 2025.xlsx. Le fichier Tendance AFISB confirme les familles de marché France 2019/2020 (lavabo, douche, urinoir, WC ; onglet \"Tendance marché FRA - 2020-2025\"). Aucune donnée directe Turquie AFISB n'est disponible ; application du coefficient brut X = 0,470.")
 make_table(doc, [
-    ["Segment", "Base France (÷2)", "× Coeff. 0,423", "Estimation Turquie (M€)"],
-    ["Section A1 — Robinetterie de collectivités", "100–125 M€", "× 0,423", "42,3 — 52,9 M€"],
-    ["Section B1 — Douches & équipements connexes", "52–65 M€", "× 0,423", "22,0 — 27,5 M€"],
-    ["Chasses d'eau & WC collectifs", "90–110 M€", "× 0,423", "38,1 — 46,5 M€"],
-    ["TOTAL Estimation 1", "242–300 M€", "× 0,423", "102,3 — 126,9 M€"],
+    ["Section", "Segment", "Valeur base France", "Extrapolation Turquie"],
+    ["Section A1", "Robinetterie de collectivités", "100-125 M€ (base AFISB France après division par 2)", "100-125 M€ × 0,470 = 47,0-58,8 M€"],
+    ["Section B1", "Douches & équipements connexes", "52-65 M€ (base AFISB France après division par 2)", "52-65 M€ × 0,470 = 24,4-30,6 M€"],
+    ["Section B1", "Chasses d'eau & WC collectifs", "90-110 M€ (base AFISB France après division par 2)", "90-110 M€ × 0,470 = 42,3-51,7 M€"],
+    ["", "TOTAL Estimation 1", "242-300 M€", "113,7-141,1 M€"],
 ])
 doc.add_paragraph()
-add_note(doc, "Ajustement -10% justifié par : économie informelle estimée significative (réduit la part traçable du marché formel) ; marché extrêmement price-driven (jusqu'à 40 fabricants locaux sur le segment économique) ; partiellement compensé par une durée de vie produit nettement plus courte qu'en Europe (max 12 ans vs >20 ans), générant un volume de remplacement plus fréquent. Estimation par extrapolation — fiabilité moyenne — à confirmer terrain.")
+add_note(doc, "Estimation par extrapolation depuis France — fiabilité moyenne. Les valeurs AFISB utilisées sont des bases internes France ; le coefficient X capte population et pouvoir d'achat relatif, mais ne capte pas les spécificités sectorielles turques.")
 
-add_heading(doc, "Estimation 2 — base \"Études BRG\" (TR_Bathrooms_Full_Report_Apr21.pdf, données 2020)", 2)
-add_para(doc, "Source : BRG Building Solutions, avril 2021. Données année 2020 (comparatif 2019 disponible). Note de date : données antérieures à la crise inflationniste et à la dépréciation massive de la livre turque 2021-2023 — valeurs EUR retenues pour comparabilité dans le temps, les valeurs nominales TRY n'étant pas directement comparables sans réévaluation.")
+add_heading(doc, "Estimation 2 — base BRG Turquie (sections A2/B2)", 2)
+add_para(doc, "Source : BRG Building Solutions, TR_Bathrooms_Full_Report_Apr21.pdf, avril 2021, données 2020. Données directes Turquie : aucune extrapolation France n'est appliquée. Valeurs MSP retenues en TRY et EUR.")
 make_table(doc, [
-    ["Segment BRG (2020)", "Volume (unités)", "Valeur MSP TRY", "Valeur MSP EUR"],
-    ["Section A2 — Bath Taps and Mixers", "750 000", "182,15 M TRY", "22,66 M EUR"],
-    ["Section A2 — Shower Taps and Mixers", "1 220 000", "272,67 M TRY", "33,92 M EUR"],
-    ["Total Section A2", "1 970 000", "454,82 M TRY", "56,58 M EUR"],
-    ["Section B2 — Kitchen Taps and Mixers", "1 510 000", "228,47 M TRY", "28,42 M EUR"],
-    ["Section B2 — Washbasin Taps and Mixers", "3 200 000", "527,14 M TRY", "65,57 M EUR"],
-    ["Total Section B2", "4 710 000", "755,61 M TRY", "93,99 M EUR"],
-    ["Bidet Taps and Mixers", "96 000", "19,33 M TRY", "2,40 M EUR"],
-    ["TOTAL BRG", "6 776 000", "1 229,75 M TRY", "152,96 M EUR"],
+    ["Section", "Segment BRG", "Volume (unités)", "Valeur MSP", "Valeur EUR"],
+    ["Section A2", "Bath Taps and Mixers", "750 000", "182,15 M TRY", "22,66 M EUR"],
+    ["Section A2", "Shower Taps and Mixers", "1 220 000", "272,67 M TRY", "33,92 M EUR"],
+    ["Total Section A2", "Bath + Shower Taps and Mixers", "1 970 000", "454,82 M TRY", "56,58 M EUR"],
+    ["Section B2", "Kitchen Taps and Mixers", "1 510 000", "228,47 M TRY", "28,42 M EUR"],
+    ["Section B2", "Washbasin Taps and Mixers", "3 200 000", "527,14 M TRY", "65,57 M EUR"],
+    ["Total Section B2", "Kitchen + Washbasin Taps and Mixers", "4 710 000", "755,61 M TRY", "93,99 M EUR"],
+    ["", "Bidet Taps and Mixers", "96 000", "19,33 M TRY", "2,40 M EUR"],
+    ["", "TOTAL BRG", "6 776 000", "1 229,75 M TRY", "152,96 M EUR"],
 ])
-doc.add_paragraph()
-add_note(doc, "Note de comparaison obligatoire : Section A1 (Estimation 1, 42,3-52,9 M€, périmètre robinetterie collective stricte) ↔ Section A2 (Estimation 2, 56,58 M€, Bath+Shower toutes applications résidentiel+ERP) — périmètres non strictement comparables (A2 inclut le résidentiel, qui représente la majorité du marché). Section B1 (22,0-27,5 M€, douches/lavabos collectifs) ↔ Section B2 (93,99 M€, Kitchen+Washbasin toutes applications) — écart important expliqué par le poids massif du résidentiel dans B2 (cuisine + lavabos domestiques). Ces écarts confirment que la robinetterie ERP stricte ne représente qu'une fraction minoritaire (7,11% en volume, cf. ci-dessous) du marché total mesuré par BRG.")
 doc.add_paragraph()
 
-add_para(doc, "Répartition par end-use (volume 2020, BRG TR p.108) :")
+doc.add_page_break()
+add_heading(doc, "Tableau comparatif obligatoire A1/A2 et B1/B2", 2)
 make_table(doc, [
-    ["End-Use", "Volume", "% total", "Commentaire"],
-    ["Housing RMI (rénovation résidentielle)", "3 641 130", "53,74%", "Moteur principal — cycle de remplacement court (max 12 ans)"],
-    ["New Housing (neuf résidentiel)", "2 652 870", "39,15%", "Marché neuf résidentiel proportionnellement important vs autres pays européens"],
-    ["Non-Housing (ERP/collectif)", "482 010", "7,11%", "Hôpitaux, écoles, hôtels, terminaux — segment Presto"],
+    ["Comparaison", "Estimation 1 AFISB", "Estimation 2 BRG TR", "Écart et commentaire"],
+    ["Section A1 ↔ Section A2", "A1 robinetterie de collectivités : 47,0-58,8 M€", "A2 Bath + Shower : 56,58 M€", "A2 se situe dans la fourchette A1 ; écart vs point médian A1 (52,9 M€) : +3,7 M€ (+7%). Périmètre proche mais non strictement identique : BRG inclut toutes applications, AFISB cible une base collectivité extrapolée."],
+    ["Section B1 ↔ Section B2", "B1 douches + WC collectifs : 66,7-82,3 M€", "B2 Kitchen + Washbasin : 93,99 M€", "B2 dépasse la fourchette B1 de +11,7 à +27,3 M€ ; écart vs point médian B1 (74,5 M€) : +19,5 M€ (+26%). Écart expliqué par le poids résidentiel fort dans Kitchen/Washbasin BRG."],
 ])
 doc.add_paragraph()
-add_para(doc, "Valeur Non-Housing (ERP) estimée par produit (volume × MSP moyen unitaire, 2020) :")
-make_table(doc, [
-    ["Type", "Volume (k unités)", "MSP EUR/unité", "Valeur M EUR"],
-    ["Bath Taps and Mixers", "52,91", "30,21", "1,60"],
-    ["Bidet Taps and Mixers", "3,57", "25,04", "0,09"],
-    ["Kitchen Taps and Mixers", "45,18", "18,82", "0,85"],
-    ["Shower Taps and Mixers", "136,51", "27,80", "3,79"],
-    ["Washbasin Taps and Mixers", "243,85", "20,49", "5,00"],
-    ["TOTAL Non-Housing (valeur, sans prime ERP)", "482,01", "—", "≈11,3 M EUR"],
-])
-doc.add_paragraph()
-add_note(doc, "LECTURE BRG — Cette valeur Non-Housing (~11,3 M€) est calculée à partir du prix MSP moyen pondéré par produit (toutes applications confondues), sans prime de prix spécifique aux produits ERP (temporisés, électroniques). Comme observé en Suisse/Belgique, les produits typiquement ERP (self-closing, électronique) ont un prix unitaire supérieur à la moyenne du marché — cette valeur est donc probablement sous-estimée. Elle ne doit PAS être confondue avec l'estimation officielle Méthode 2 de la Partie 6.2, qui applique le coefficient ERP forfaitaire 10-15% conformément au protocole MAB v8 (et non ce ratio Non-Housing direct de 7,11%).")
-doc.add_paragraph()
+add_note(doc, "Le tableau \"Types ERP dominants dans Non-Housing\" n'est pas inclus dans l'étude principale conformément à CLAUDE.md v8. Les données brutes Non-Housing BRG restent documentées en annexes uniquement.")
 
 add_heading(doc, "5.2 Spécificités produit du marché turc", 2)
 add_bullet(doc, "Marché à 3 niveaux de prix : premium (Hansgrohe, Grohe, Ideal Standard — import), medium (Eczacıbaşı/ECA, Elginkan — locaux), économie (jusqu'à 40 fabricants locaux + import chinois). (BRG TR Apr21)")
@@ -441,51 +426,54 @@ doc.add_paragraph()
 add_heading(doc, "PARTIE 6 — TAILLE MARCHÉ : ROBINETTERIE COLLECTIVE ERP", 1)
 
 add_heading(doc, "6.1 Taille et valeur du marché robinetterie collective ERP", 2)
-add_bullet(doc, "Estimation interne propriétaire (dossier de recherche Presto) : marché robinetterie ERP Turquie ~56 M€ (~0,64 €/habitant), ~4M pièces, TCAC estimé ~4% (2024-2030). Méthode de calcul propriétaire non détaillée dans le dossier — à confronter aux deux méthodes officielles ci-dessous.")
-add_bullet(doc, "Méthode 1 (extrapolation France, coefficient ajusté 0,423) : 42,3 — 52,9 M€ (robinetterie collective stricte, Section A1).")
-add_bullet(doc, "Méthode 2 (BRG TR 2020, coefficient ERP forfaitaire 10-15% sur marché total) : 13,8 — 20,7 M€ (après ajustement structurel).")
-add_bullet(doc, "Fourchette finale retenue : 20,7 — 52,9 M€ — l'estimation interne propriétaire (~56 M€) se situe légèrement au-dessus de cette fourchette haute, suggérant que la borne haute (Méthode 1) est la plus réaliste, ou que la croissance du marché 2020-2025 (inflation cumulée, reconstruction post-séisme) dépasse les hypothèses des deux méthodes officielles.")
+add_bullet(doc, "Donnée locale interne disponible : marché robinetterie ERP Turquie ~56 M€ (~0,64 €/habitant), ~4M pièces, TCAC estimé ~4% (2024-2030). Source : dossier interne propriétaire Presto ; méthode non détaillée, donc utilisée comme validation croisée et non comme méthode officielle.")
+add_bullet(doc, "Méthode 1 officielle v8 (base AFISB/France, Section A1 après division par 2, coefficient X + ajustement structurel) : 42,3-52,9 M€.")
+add_bullet(doc, "Méthode 2 officielle v8 (BRG TR × coefficient ERP interne 10% et 15%, puis ajustement structurel) : 13,8-20,7 M€.")
+add_bullet(doc, "Fourchette finale retenue : 20,7-52,9 M€ — entre Méthode 2 haute et Méthode 1, conformément au protocole v8. L'estimation interne propriétaire (~56 M€) se situe légèrement au-dessus et valide plutôt la borne haute.")
 
-add_heading(doc, "6.2 Méthode d'extrapolation — Détail du calcul", 2)
-add_para(doc, "Méthode 1 — base \"Analyse de Marché France\" / AFISB (source interne Presto)")
+add_heading(doc, "6.2 Méthode d'extrapolation — deux méthodes obligatoires", 2)
+add_para(doc, "Formule de base : (PIB/hab Turquie / PIB/hab France) × (Population Turquie / Population France) = Coefficient X.")
 make_table(doc, [
-    ["Étape", "Calcul", "Résultat"],
-    ["PIB/hab Turquie 2025", "IMF WEO 10/2025", "18 611 USD"],
-    ["PIB/hab France 2025 (constante MAB)", "Worldometer", "48 982 USD"],
-    ["Ratio PIB/hab", "18 611 / 48 982", "0,380"],
-    ["Population Turquie 2025", "Source interne / TurkStat", "85,5 M"],
-    ["Population France 2025 (constante MAB)", "Worldometer", "69,1 M"],
-    ["Ratio population", "85,5 / 69,1", "1,237"],
-    ["Coefficient brut X", "0,380 × 1,237", "0,470"],
-    ["Ajustement structurel", "-10% (économie informelle, marché price-driven, partiellement compensé par cycle remplacement court)", "× 0,90"],
-    ["Coefficient ajusté", "0,470 × 0,90", "0,423"],
-    ["Base France robinetterie collectivités (÷2)", "100–125 M€", "—"],
-    ["Estimation Turquie ajustée", "100–125 M€ × 0,423", "42,3–52,9 M€"],
+    ["Variable", "Calcul", "Résultat"],
+    ["Ratio PIB/hab", "18 611 USD / 48 982 USD", "0,380"],
+    ["Ratio population", "85,5 M / 69,1 M", "1,237"],
+    ["Coefficient X brut", "0,380 × 1,237", "0,470"],
+    ["Ajustement structurel", "0,470 × 0,90", "0,423"],
 ])
 doc.add_paragraph()
 
-add_para(doc, "Méthode 2 — base \"Études BRG\" (marché total taps & mixers TR × coefficient ERP 10-15%)")
+add_para(doc, "Méthode 1 — base AFISB/France (Section A1 robinetterie de collectivités)")
 make_table(doc, [
     ["Étape", "Calcul", "Résultat"],
-    ["Total taps & mixers TR (BRG 2020)", "TR_Bathrooms_Full_Report_Apr21, p.101", "1 229,75 M TRY = 152,96 M EUR"],
-    ["Coefficient ERP basse (estimation interne Presto)", "152,96 M€ × 10%", "15,30 M EUR"],
-    ["Coefficient ERP haute (estimation interne Presto)", "152,96 M€ × 15%", "22,94 M EUR"],
-    ["Ajustement structurel (idem Méthode 1)", "× 0,90", "—"],
-    ["Estimation Méthode 2 basse ajustée", "15,30 M€ × 0,90", "13,77 M EUR"],
-    ["Estimation Méthode 2 haute ajustée", "22,94 M€ × 0,90", "20,65 M EUR"],
+    ["Base France Section A1", "Robinetterie de collectivités AFISB après division par 2", "100-125 M€"],
+    ["Application coefficient X brut", "100-125 M€ × 0,470", "47,0-58,8 M€"],
+    ["Ajustement structurel", "47,0-58,8 M€ × 0,90", "42,3-52,9 M€"],
 ])
 doc.add_paragraph()
+add_note(doc, "Ajustement structurel -10% : économie informelle significative (réduit la part traçable du marché formel), marché extrêmement price-driven et dominé par des acteurs locaux/économie, instabilité TRY/EUR ; partiellement compensés par un cycle de remplacement court (max 12 ans vs >20 ans en Europe, BRG TR Apr21). Estimation par extrapolation avec ajustement structurel — fiabilité moyenne.")
+
+add_para(doc, "Méthode 2 — base BRG Turquie (marché total pays × coefficient ERP interne 10% et 15%)")
+make_table(doc, [
+    ["Étape", "Calcul", "Résultat"],
+    ["Base BRG Turquie", "Total taps & mixers TR 2020 (BRG TR Apr21, p.101)", "152,96 M€"],
+    ["Coefficient ERP basse", "152,96 M€ × 10%", "15,30 M€"],
+    ["Coefficient ERP haute", "152,96 M€ × 15%", "22,94 M€"],
+    ["Ajustement structurel basse", "15,30 M€ × 0,90", "13,77 M€"],
+    ["Ajustement structurel haute", "22,94 M€ × 0,90", "20,65 M€"],
+])
+doc.add_paragraph()
+add_note(doc, "Conformément à v8, la part Non-Housing volume BRG n'est pas utilisée pour la Méthode 2 ; elle est remplacée par le coefficient ERP interne Presto 10-15%.")
 
 make_table(doc, [
     ["", "Méthode 1 (base AFISB/France)", "Méthode 2 basse (BRG × 10%)", "Méthode 2 haute (BRG × 15%)"],
-    ["Base utilisée", "100–125 M€ (France ÷2)", "152,96 M€ (BRG TR 2020 total)", "152,96 M€ (BRG TR 2020 total)"],
-    ["Coefficient X", "0,470 brut → 0,423 ajusté", "10%", "15%"],
-    ["Ajustement structurel", "-10%", "-10% (même ajustement)", "-10% (même ajustement)"],
-    ["Estimation marché ERP", "42,3–52,9 M€", "13,77 M€", "20,65 M€"],
-    ["Niveau de confiance", "Moyen (extrapolation)", "Moyen (donnée BRG datée 2020, pré-crise lire)", "Moyen (donnée BRG datée 2020, pré-crise lire)"],
+    ["Base utilisée", "Section A1 AFISB France : 100-125 M€", "BRG TR total : 152,96 M€", "BRG TR total : 152,96 M€"],
+    ["Coefficient X", "0,470 brut", "10%", "15%"],
+    ["Ajustement structurel", "-10% (coefficient ajusté 0,423)", "-10%", "-10%"],
+    ["Estimation marché ERP", "42,3-52,9 M€", "13,77 M€", "20,65 M€"],
+    ["Niveau de confiance", "Moyen : extrapolation France structurée", "Moyen : BRG direct mais donnée 2020 pré-crise TRY", "Moyen : BRG direct mais coefficient ERP interne à valider terrain"],
 ], font_size=8)
 doc.add_paragraph()
-add_note(doc, "Fourchette finale retenue : 20,65 — 52,9 M€ (entre Méthode 2 haute et Méthode 1). L'estimation interne propriétaire Presto (~56 M€) se situe juste au-dessus, ce qui valide la borne haute comme plus représentative de la réalité actuelle du marché. Limites systématiques : aucune des deux méthodes ne capte l'économie informelle turque ; les données BRG TR (2020) précèdent la crise inflationniste/dépréciation massive 2021-2023, leur actualisation est recommandée (contact europe@brgbuildingsolutions.com) ; l'ajustement structurel -10% repose sur des hypothèses qualitatives à confirmer terrain ; la volatilité TRY/EUR peut fausser toute comparaison dans le temps ; le coefficient ERP 10-15% est une estimation interne Presto, non vérifiée sur le marché turc spécifiquement.")
+add_note(doc, "Fourchette finale retenue : 20,65-52,9 M€. Limites systématiques : la méthode ne capte pas la part d'économie informelle ; elle ne reflète pas toutes les spécificités sectorielles locales ; la volatilité des taux de change peut fausser la comparaison ; l'ajustement structurel repose sur des hypothèses à confirmer terrain ; le coefficient ERP 10-15% est une estimation interne Presto — à valider terrain.")
 
 add_heading(doc, "6.3 Évaluation du potentiel par segment ERP — Scoring", 2)
 make_table(doc, [
@@ -622,9 +610,9 @@ bold_bullet(doc, "Présence Presto en Turquie", "Coordonnées exactes de représ
 doc.add_paragraph()
 
 # Sauvegarde
-path_etude = os.path.join(OUTPUT_DIR, "MAB_Turquie_Etude.docx")
+path_etude = os.path.join(OUTPUT_DIR, "MAB_Turquie_EtudeV2.docx")
 doc.save(path_etude)
-print(f"✓ Étude v1 sauvegardée : {path_etude}")
+print(f"✓ Étude v2 sauvegardée : {path_etude}")
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -843,6 +831,6 @@ ann.save(path_ann)
 print(f"✓ Annexes v1 sauvegardées : {path_ann}")
 print()
 print("═" * 60)
-print("MAB TURQUIE v1 — Génération terminée")
+print("MAB TURQUIE v2 — Génération terminée")
 print(f"  Étude   → {path_etude}")
 print(f"  Annexes → {path_ann}")
