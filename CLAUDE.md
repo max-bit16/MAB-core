@@ -213,28 +213,54 @@ Segments à analyser :
 
 #### 5.1 — Taille et valeur du marché robinetterie
 
-**Deux estimations obligatoires** avec méthode de calcul affichée étape par étape :
+**Deux estimations obligatoires**, toujours présentées côte à côte avec écart et commentaire.
 
-**Estimation A — base "ANALYSE DE MARCHÉ FRANCE" (source interne Presto)**
-- Lire le document "ANALYSE DE MARCHÉ FRANCE" dans sources-internes/
-- Diviser par 2 les valeurs du tableau de segmentation (valeurs HT) :
-  - Robinetterie de collectivités : 200-250 M€ → **100-125 M€**
-  - Chasses d'eau et équipements WC collectifs : 180-220 M€ → **90-110 M€**
-  - Douches et équipements connexes : 105-130 M€ → **52-65 M€**
-- Appliquer la formule d'extrapolation sur chaque segment pour le pays cible
-- Ne pas utiliser la donnée Xerfi 635M€
+**Règle prioritaire** : si des données directes sur le marché local du pays sont disponibles (dans sources-internes/ ou via recherche externe), les utiliser en priorité pour chaque estimation. Si non disponibles, appliquer la formule d'extrapolation depuis la France.
 
-**Estimation B — base "Études BRG" (si disponible dans sources-internes/)**
+---
+
+**Estimation 1 — base "données AFISB" (fichier "données Afisb" dans sources-internes/)**
+- Lire le fichier "données Afisb" dans sources-internes/
+- Extraire les données de marché pertinentes pour le périmètre robinetterie générale
+- Si données directes sur le pays disponibles : les utiliser sans extrapolation
+- Si données France uniquement : appliquer la formule d'extrapolation (coefficient X × base AFISB)
+- Afficher le calcul étape par étape
+- Mentionner la source et l'année des données AFISB utilisées
+
+**Segmentation Estimation 1 avec sections comparables :**
+
+| Section | Segment | Valeur base France | Extrapolation pays |
+|---|---|---|---|
+| **Section A1** | Robinetterie de collectivités | [valeur AFISB ÷ 2] | [× coefficient X] |
+| **Section B1** | Douches & équipements connexes | [valeur AFISB ÷ 2] | [× coefficient X] |
+| | Chasses d'eau & WC collectifs | [valeur AFISB ÷ 2] | [× coefficient X] |
+| | **TOTAL** | | |
+
+---
+
+**Estimation 2 — base "Études BRG" (fichier BRG pays dans sources-internes/)**
 - Lire l'étude BRG correspondant au pays dans sources-internes/
-- Extraire la taille de marché France de référence citée dans l'étude BRG
-- Appliquer la formule d'extrapolation avec cette base
+- Si données directes du marché local disponibles dans le BRG : les utiliser sans extrapolation
+- Si données France uniquement : appliquer la formule d'extrapolation
 
-**Présenter les deux estimations côte à côte avec écart et commentaire.**
+**Segmentation Estimation 2 avec sections comparables :**
 
-**Segmentation obligatoire du marché estimé :**
-- Robinetterie de collectivités
-- Chasses d'eau et équipements WC collectifs
-- Douches et équipements connexes
+| Section | Segment BRG | Volume (unités) | Valeur MSP | Valeur EUR |
+|---|---|---|---|---|
+| **Section A2** | Bath Taps and Mixers | | | |
+| **Section A2** | Shower Taps and Mixers | | | |
+| **Total Section A2** | | | | |
+| **Section B2** | Kitchen Taps and Mixers | | | |
+| **Section B2** | Washbasin Taps and Mixers | | | |
+| **Total Section B2** | | | | |
+| | Bidet Taps and Mixers | | | |
+| **TOTAL BRG** | | | | |
+
+> **Note de comparaison obligatoire** : Section A1 (Estimation 1) ↔ Section A2 (Estimation 2) — périmètre comparable "robinetterie sanitaire collective". Section B1 (Estimation 1) ↔ Section B2 (Estimation 2) — périmètre comparable "douches/lavabos". Afficher l'écart entre A1 et A2 d'une part, B1 et B2 d'autre part, avec commentaire explicatif.
+
+**NE PAS inclure** le tableau "Types ERP dominants dans Non-Housing" — ces données BRG ne sont pas pertinentes.
+
+---
 
 #### 5.2 — Spécificités produit du pays
 - Habitudes d'achat, produits dominants, préférences techniques et culturelles
@@ -267,20 +293,34 @@ Segments à analyser :
 Coefficient X × Base France = Estimation marché [PAYS]
 ```
 
-**Méthode 1 — base "ANALYSE DE MARCHÉ FRANCE"**
-- Base France : 100-125 M€ (robinetterie de collectivités uniquement, après division par 2)
+**Méthode 1 — base "ANALYSE DE MARCHÉ FRANCE" / données AFISB**
+- Base France : valeur Section A1 (robinetterie de collectivités, après division par 2)
 - Appliquer le coefficient X
 - Appliquer un **ajustement structurel** : coefficient de variation en % calculé et justifié par Claude en fonction des variables structurelles identifiées pour ce pays (exemples : part d'économie informelle, taux d'urbanisation, maturité du marché BTP, stabilité politique, culture de rénovation vs neuf, etc.)
 - Afficher le calcul étape par étape
 - Justifier chaque variable retenue avec source ou raisonnement explicite
 - Mentionner : "Estimation par extrapolation avec ajustement structurel — fiabilité moyenne"
 
-**Méthode 2 — base "Études BRG"**
-- Base France : valeur extraite de l'étude BRG correspondante
-- Appliquer le même coefficient X et le même ajustement structurel
+**Méthode 2 — base "Études BRG" (marché total pays × coefficient ERP)**
+- Base : marché total taps & mixers du pays (valeur BRG directe si disponible, sinon extrapolation)
+- Appliquer un **coefficient ERP de 10% et 15%** (estimation interne Presto de la part non-housing) :
+  - Estimation basse : Marché total BRG × 10% = [valeur]
+  - Estimation haute : Marché total BRG × 15% = [valeur]
+- Appliquer le même ajustement structurel que Méthode 1
 - Afficher le calcul étape par étape
+- **Ne pas utiliser** la part Non-Housing volume BRG (ex. 4,71%) — remplacée par le coefficient 10-15%
 
-**Présenter les deux résultats côte à côte avec fourchette finale retenue et niveau de confiance.**
+**Tableau comparatif obligatoire :**
+
+| | Méthode 1 (base AFISB/France) | Méthode 2 basse (BRG × 10%) | Méthode 2 haute (BRG × 15%) |
+|---|---|---|---|
+| Base utilisée | | | |
+| Coefficient X | | | |
+| Ajustement structurel | | | |
+| **Estimation marché ERP** | | | |
+| Niveau de confiance | | | |
+
+**Fourchette finale retenue** : [entre Méthode 1 et Méthode 2 haute] — mentionner explicitement.
 
 **Constantes de référence :**
 - PIB/hab France 2025 : **48 982 USD** (Worldometer)
@@ -292,6 +332,7 @@ Coefficient X × Base France = Estimation marché [PAYS]
 - Elle ne reflète pas les spécificités sectorielles locales
 - La volatilité des taux de change peut fausser la comparaison
 - L'ajustement structurel repose sur des hypothèses à confirmer terrain
+- Le coefficient ERP 10-15% est une estimation interne Presto — à valider terrain
 
 #### 6.3 — Évaluation du potentiel par segment ERP
 - Pour chaque segment ERP (4.1 à 4.11) : ordre de grandeur du potentiel + **score de 1 à 5**
