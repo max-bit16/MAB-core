@@ -96,7 +96,7 @@ def set_margins(doc):
 doc = Document()
 set_margins(doc)
 
-t = doc.add_heading("MAB TURQUIE — ÉTUDE DE MARCHÉ v2", 0)
+t = doc.add_heading("MAB TURQUIE — ÉTUDE DE MARCHÉ v4", 0)
 t.alignment = WD_ALIGN_PARAGRAPH.CENTER
 sub = doc.add_paragraph("Robinetterie sanitaire collective / ERP — Les Robinets Presto")
 sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -343,7 +343,7 @@ doc.add_paragraph()
 add_heading(doc, "PARTIE 5 — TAILLE MARCHÉ : ROBINETTERIE GÉNÉRALE", 1)
 
 add_heading(doc, "5.1 Taille et valeur du marché robinetterie", 2)
-add_note(doc, "Structure v8 stricte : deux estimations côte à côte. Estimation 1 = base AFISB France extrapolée avec le coefficient brut X. Estimation 2 = données directes BRG Turquie, sans extrapolation. L'ajustement structurel n'est appliqué qu'en Partie 6.")
+add_note(doc, "Règle de périmètre v8 : la Partie 5 porte sur la robinetterie GÉNÉRALE (salle de bains / cuisine / lavabo / douche / bain). Elle ne doit PAS utiliser les bases \"robinetterie de collectivités\", \"ERP\", \"Non-Housing\" ou \"France ÷ 2\" — ces bases relèvent de la Partie 6.")
 
 add_heading(doc, "Constantes de référence et coefficient d'extrapolation", 2)
 make_table(doc, [
@@ -353,73 +353,108 @@ make_table(doc, [
     ["PIB/hab Turquie 2025", "18 611 USD (fourchette 18 200-18 611)", "IMF WEO 10/2025 / Worldometer"],
     ["Population Turquie 2025", "85,5 M", "Source interne / TurkStat"],
     ["Coefficient brut X", "(18 611 / 48 982) × (85,5 / 69,1) = 0,380 × 1,237 = 0,470", "Calcul MAB v8"],
-    ["Taux de change indicatif", "≈51 TRY/EUR (2026) — dépréciation continue -27%/an", "ECB eurofxref 02/2026"],
+    ["Taux de change BRG 2020", "8,04 TRY/EUR (moyenne annuelle)", "BRG TR Apr21 / OANDA"],
 ])
 doc.add_paragraph()
 
-add_heading(doc, "Estimation 1 — base AFISB France (sections A1/B1)", 2)
-add_para(doc, "Source AFISB utilisée : AFISB 2021 Rapport étude de marché annuel V6 (15/05/2021) + Tendance AFISB - depuis 2020 à 2025.xlsx. Le fichier Tendance AFISB confirme les familles de marché France 2019/2020 (lavabo, douche, urinoir, WC ; onglet \"Tendance marché FRA - 2020-2025\"). Aucune donnée directe Turquie AFISB n'est disponible ; application du coefficient brut X = 0,470.")
-make_table(doc, [
-    ["Section", "Segment", "Valeur base France", "Extrapolation Turquie"],
-    ["Section A1", "Robinetterie de collectivités", "100-125 M€ (base AFISB France après division par 2)", "100-125 M€ × 0,470 = 47,0-58,8 M€"],
-    ["Section B1", "Douches & équipements connexes", "52-65 M€ (base AFISB France après division par 2)", "52-65 M€ × 0,470 = 24,4-30,6 M€"],
-    ["Section B1", "Chasses d'eau & WC collectifs", "90-110 M€ (base AFISB France après division par 2)", "90-110 M€ × 0,470 = 42,3-51,7 M€"],
-    ["", "TOTAL Estimation 1", "242-300 M€", "113,7-141,1 M€"],
-])
+# --- Estimation 1 AFISB ---
+add_heading(doc, "Estimation 1 — base AFISB / MSI (robinetterie générale France → extrapolation Turquie)", 2)
+add_para(doc, "Sources AFISB lues : (1) Tendance AFISB - depuis 2020 à 2025.xlsx — volumes France par famille 2019/2020 ; (2) AFISB 2021 Rapport étude de marché annuel V6. Source complémentaire valeur : MSI Reports, « Marché de la Robinetterie Sanitaire en France », octobre 2018 (données observées 2013-2017, prévisions 2018-2022). L'AFISB ne fournit que des volumes ; les valeurs € sont issues de MSI. Aucune donnée directe Turquie AFISB n'est disponible ; extrapolation avec coefficient X = 0,470.")
 doc.add_paragraph()
-add_note(doc, "Estimation par extrapolation depuis France — fiabilité moyenne. Les valeurs AFISB utilisées sont des bases internes France ; le coefficient X capte population et pouvoir d'achat relatif, mais ne capte pas les spécificités sectorielles turques.")
 
-add_heading(doc, "Estimation 2 — base BRG Turquie (sections A2/B2)", 2)
-add_para(doc, "Source : BRG Building Solutions, TR_Bathrooms_Full_Report_Apr21.pdf, avril 2021, données 2020. Données directes Turquie : aucune extrapolation France n'est appliquée. Valeurs MSP retenues en TRY et EUR.")
+add_para(doc, "Données France — volumes AFISB (Tendance AFISB xlsx, onglet « Tendance marché FRA - 2020-2025 ») :")
 make_table(doc, [
-    ["Section", "Segment BRG", "Volume (unités)", "Valeur MSP", "Valeur EUR"],
-    ["Section A2", "Bath Taps and Mixers", "750 000", "182,15 M TRY", "22,66 M EUR"],
-    ["Section A2", "Shower Taps and Mixers", "1 220 000", "272,67 M TRY", "33,92 M EUR"],
-    ["Total Section A2", "Bath + Shower Taps and Mixers", "1 970 000", "454,82 M TRY", "56,58 M EUR"],
-    ["Section B2", "Kitchen Taps and Mixers", "1 510 000", "228,47 M TRY", "28,42 M EUR"],
-    ["Section B2", "Washbasin Taps and Mixers", "3 200 000", "527,14 M TRY", "65,57 M EUR"],
-    ["Total Section B2", "Kitchen + Washbasin Taps and Mixers", "4 710 000", "755,61 M TRY", "93,99 M EUR"],
-    ["", "Bidet Taps and Mixers", "96 000", "19,33 M TRY", "2,40 M EUR"],
-    ["", "TOTAL BRG", "6 776 000", "1 229,75 M TRY", "152,96 M EUR"],
+    ["Famille AFISB", "Volume France 2019", "Volume France 2020", "Variation", "Source"],
+    ["Lavabo (hors évier) — total mélangeurs + mitigeurs + miti. therm.", "7 021 000", "6 722 700", "-4,2%", "AFISB 2020-2025 xlsx"],
+    ["Douche", "4 015 000", "4 015 000", "0%", "AFISB 2020-2025 xlsx"],
+    ["Urinoir", "—", "131 000", "—", "AFISB — exclu (collectivités/Partie 6)"],
+    ["WC", "—", "195 000", "—", "AFISB — exclu (collectivités/Partie 6)"],
 ])
 doc.add_paragraph()
+add_note(doc, "La catégorie « Lavabo (hors évier) » AFISB agrège tous les types (mélangeurs : 169 700, mitigeurs : 5 299 600, miti. thermostatiques : 1 253 400 en 2020). Son périmètre est plus large que le seul « Washbasin » BRG : elle intègre probablement cuisine et autres applications hors douche. L'AFISB ne fournit pas de ventilation lavabo/cuisine comparable au BRG.")
+
+add_para(doc, "Données France — valeurs MSI (données observées 2017, M€ HT prix fabricants) :")
+make_table(doc, [
+    ["Famille produit MSI/AFISB", "Volume 2017 (milliers)", "Valeur 2017 (M€ HT)", "Inclusion périmètre comparable", "Source / année"],
+    ["Lavabos / vasques et lave-mains", "3 948", "86,0", "Oui", "MSI 2018, données 2017"],
+    ["Douche, bain et bain-douche", "2 893", "164,6", "Oui", "MSI 2018, données 2017"],
+    ["Cuisine (évier)", "2 532", "100,6", "Oui", "MSI 2018, données 2017"],
+    ["Bidet", "négligeable", "—", "Non (négligeable par convention MSI)", "MSI 2018"],
+    ["TOTAL AFISB/MSI — robinetterie générale comparable", "9 373", "351,2", "", "MSI 2018, données 2017"],
+])
+doc.add_paragraph()
+add_note(doc, "Le total MSI 2017 de 351,2 M€ couvre la robinetterie domestique France = lavabo + douche/bain + cuisine. Robinetterie de collectivités (78,7 M€, MSI 2017) exclue conformément à la règle de périmètre Partie 5. Bidet considéré négligeable par MSI.")
+
+add_para(doc, "Extrapolation Turquie (coefficient X = 0,470) :")
+make_table(doc, [
+    ["Famille", "Valeur France 2017 (M€)", "× Coefficient X", "Estimation Turquie (M€)"],
+    ["Lavabos / vasques et lave-mains", "86,0", "× 0,470", "40,4"],
+    ["Douche, bain et bain-douche", "164,6", "× 0,470", "77,4"],
+    ["Cuisine (évier)", "100,6", "× 0,470", "47,3"],
+    ["TOTAL AFISB/MSI — robinetterie générale comparable", "351,2", "× 0,470", "165,1"],
+])
+doc.add_paragraph()
+add_note(doc, "Estimation par extrapolation depuis France — fiabilité moyenne. La valeur base France est observée (MSI 2017), mais le coefficient X ne capte pas les spécificités structurelles turques (marché price-driven, qualité inférieure, durée de vie plus courte). L'écart temporel (base 2017 vs coefficient 2025) introduit une incertitude supplémentaire.")
 
 doc.add_page_break()
-add_heading(doc, "Tableau comparatif obligatoire A1/A2 et B1/B2", 2)
+# --- Estimation 2 BRG ---
+add_heading(doc, "Estimation 2 — base BRG Turquie (données directes marché local)", 2)
+add_para(doc, "Source : BRG Building Solutions, TR_Bathrooms_Full_Report_Apr21.pdf, section 3.3.1 (p. 101), avril 2021, données 2020. Données directes Turquie : aucune extrapolation France. Valeurs en MSP = Manufacturer's Selling Price, hors TVA et frais d'installation. Taux de change 2020 : 8,04 TRY/EUR (OANDA via BRG).")
 make_table(doc, [
-    ["Comparaison", "Estimation 1 AFISB", "Estimation 2 BRG TR", "Écart et commentaire"],
-    ["Section A1 ↔ Section A2", "A1 robinetterie de collectivités : 47,0-58,8 M€", "A2 Bath + Shower : 56,58 M€", "A2 se situe dans la fourchette A1 ; écart vs point médian A1 (52,9 M€) : +3,7 M€ (+7%). Périmètre proche mais non strictement identique : BRG inclut toutes applications, AFISB cible une base collectivité extrapolée."],
-    ["Section B1 ↔ Section B2", "B1 douches + WC collectifs : 66,7-82,3 M€", "B2 Kitchen + Washbasin : 93,99 M€", "B2 dépasse la fourchette B1 de +11,7 à +27,3 M€ ; écart vs point médian B1 (74,5 M€) : +19,5 M€ (+26%). Écart expliqué par le poids résidentiel fort dans Kitchen/Washbasin BRG."],
+    ["Segment BRG", "Volume (unités)", "Valeur MSP (M TRY)", "MSP unitaire (EUR)", "Valeur MSP (M EUR)", "Inclusion périmètre comparable"],
+    ["Bath Taps and Mixers", "750 000", "182,15", "30,21", "22,66", "Oui"],
+    ["Shower Taps and Mixers", "1 220 000", "272,67", "27,80", "33,92", "Oui"],
+    ["Kitchen Taps and Mixers", "1 510 000", "228,47", "18,82", "28,42", "Oui"],
+    ["Washbasin Taps and Mixers", "3 200 000", "527,14", "20,49", "65,57", "Oui"],
+    ["Bidet Taps and Mixers", "96 000", "19,33", "25,04", "2,40", "Non (exclu pour comparabilité AFISB)"],
+    ["TOTAL BRG — robinetterie générale comparable", "6 680 000", "1 210,43", "—", "150,57", ""],
+    ["TOTAL BRG — tous segments T&M", "6 776 000", "1 229,75", "—", "152,96", ""],
 ])
 doc.add_paragraph()
-add_note(doc, "Le tableau \"Types ERP dominants dans Non-Housing\" n'est pas inclus dans l'étude principale conformément à CLAUDE.md v8. Les données brutes Non-Housing BRG restent documentées en annexes uniquement.")
+add_note(doc, "Bidet exclu du périmètre comparable car considéré négligeable côté AFISB/MSI (convention MSI 2018). Impact : 2,40 M€ soit 1,6% du total BRG.")
+
+# --- Note de comparaison obligatoire ---
+add_heading(doc, "Note de comparaison obligatoire", 2)
+make_table(doc, [
+    ["", "Estimation 1 (AFISB/MSI extrapolé)", "Estimation 2 (BRG Turquie direct)"],
+    ["Périmètre", "Robinetterie générale : lavabo + douche/bain + cuisine", "Robinetterie générale : washbasin + bath + shower + kitchen"],
+    ["TOTAL comparable", "165,1 M€", "150,6 M€"],
+    ["Écart absolu", "+14,5 M€ (AFISB > BRG)", ""],
+    ["Écart relatif", "+9,7%", ""],
+])
+doc.add_paragraph()
+add_para(doc, "Explication des écarts :")
+add_bullet(doc, "Année et contexte : MSI base France 2017 (marché stable/croissant) vs BRG Turquie 2020 (creux post-crise monétaire + COVID). Le marché T&M turc a baissé de ~25% entre le pic 2018 (8 713 K unités) et le creux 2020 (6 776 K unités). (BRG TR Apr21, p. 100)")
+add_bullet(doc, "Méthode : Estimation 1 = extrapolation France via coefficient X (population × PIB/hab), méthode top-down. Estimation 2 = données directes BRG recueillies par enquêtes industrie locale, méthode bottom-up.")
+add_bullet(doc, "Prix : MSI = prix fabricants HT France (€). BRG = MSP local converti en EUR au taux moyen 2020 (8,04 TRY/EUR). Les MSP turcs reflètent un marché nettement plus price-driven (segment economy 44% du volume washbasin).")
+add_bullet(doc, "Périmètre produit : quasi-identique (lavabo/douche-bain/cuisine). Seul écart : le bidet est exclu des deux côtés (AFISB = négligeable ; BRG = 2,40 M€ retiré du comparable).")
+add_bullet(doc, "Conclusion : l'écart de +9,7% est modéré et cohérent compte tenu des différences de méthode et de temporalité. La convergence des deux estimations (150-165 M€) renforce la confiance dans l'ordre de grandeur du marché de la robinetterie générale en Turquie.")
 
 add_heading(doc, "5.2 Spécificités produit du marché turc", 2)
 add_bullet(doc, "Marché à 3 niveaux de prix : premium (Hansgrohe, Grohe, Ideal Standard — import), medium (Eczacıbaşı/ECA, Elginkan — locaux), économie (jusqu'à 40 fabricants locaux + import chinois). (BRG TR Apr21)")
-add_bullet(doc, "Produit dominant : washbasin mixers one-head — cœur de marché, vendu majoritairement en segment économie/lower. Tendance à la baisse des baignoires au profit des douches (one-head mixers).")
-add_bullet(doc, "Durée de vie produit nettement plus courte qu'en Europe (max 12 ans vs >20 ans) — qualité perçue inférieure, marché du remplacement (RMI) structurellement plus actif. (BRG TR Apr21)")
-add_bullet(doc, "Marge distributeur ~45% du prix catalogue, jusqu'à 55% sur contrats annuels signés à l'avance avec les fabricants. (BRG TR Apr21)")
-add_bullet(doc, "Tendance de fond : distribution en mutation rapide vers le DIY et l'e-commerce (Trendyol, Hepsiburada, n11, Koçtaş), exerçant une pression à la baisse sur les marges des canaux traditionnels (négoce, DIY physique).")
+add_bullet(doc, "Produit dominant : washbasin mixers one-head — cœur de marché, vendu majoritairement en segment économie/lower. Tendance à la baisse des baignoires au profit des douches (one-head mixers). (BRG TR Apr21, p. 93-95)")
+add_bullet(doc, "Durée de vie produit nettement plus courte qu'en Europe (max 12 ans vs >20 ans) — qualité perçue inférieure, marché du remplacement (RMI) structurellement plus actif. (BRG TR Apr21, p. 97)")
+add_bullet(doc, "Marge distributeur ~45% du prix catalogue, jusqu'à 55% sur contrats annuels signés à l'avance avec les fabricants. (BRG TR Apr21, p. 95)")
+add_bullet(doc, "Tendance de fond : distribution en mutation rapide vers le DIY et l'e-commerce (Trendyol, Hepsiburada, n11, Koçtaş), exerçant une pression à la baisse sur les marges des canaux traditionnels (négoce, DIY physique). (BRG TR Apr21, p. 99)")
 
 add_heading(doc, "5.3 Canaux de distribution", 2)
 add_note(doc, "Hypothèse basée sur le modèle France adaptée aux spécificités turques (BRG TR + recherche PREP) — à confirmer terrain.")
 make_table(doc, [
     ["Canal", "Part estimée", "Acteurs identifiés"],
-    ["Grossistes BTP généralistes", "Majoritaire, non quantifié précisément", "Dikkaya Teknik Malzeme, Borpaş Plastik, Biryapi, Feyap — aucun spécialiste ERP/collectivités dédié identifié"],
-    ["Wholesale/Export spécialisé bain", "Significatif", "ELEKS Foreign Trade (Elginkan — Europe/Moyen-Orient/CEI), ELMOR (Elginkan), INTEMA (Eczacıbaşı) — couverture Turquie"],
-    ["DIY Retailers", "En croissance", "KOÇTAŞ (CA 180 M€, 171 dépôts, 2020), TEKZEN (CA 190 M€, 128 dépôts, Turquie/Roumanie/Irak, 2020), BAUHAUS (10 dépôts, Istanbul/Ankara/Bursa/Antalya)"],
-    ["Réseaux SAV agréés nationaux", "Atout pour ERP", "Réseau \"Yetkili Servis\" VitrA/Artema — capillaire national, critère de poids en appels d'offres publics"],
-    ["E-commerce / DIY en ligne", "Croissance forte attendue", "Trendyol, Hepsiburada, n11 — concerne principalement le résidentiel grand public"],
-    ["Marchés publics", "Canal clé ERP", "EKAP (Elektronik Kamu Alımları Platformu) — accès direct non exploré en PREP, à approfondir"],
+    ["Grossistes BTP généralistes", "Majoritaire, non quantifié précisément", "Dikkaya Teknik Malzeme, Borpaş Plastik, Biryapi, Feyap"],
+    ["Wholesale/Export spécialisé bain", "Significatif", "ELEKS Foreign Trade (Elginkan), ELMOR (Elginkan), INTEMA (Eczacıbaşı)"],
+    ["DIY Retailers", "En croissance", "KOÇTAŞ (CA 180 M€, 171 dépôts, 2020), TEKZEN (CA 190 M€, 128 dépôts), BAUHAUS (10 dépôts)"],
+    ["E-commerce / DIY en ligne", "Croissance forte attendue", "Trendyol, Hepsiburada, n11 — principalement résidentiel grand public"],
+    ["Marchés publics", "Canal clé ERP", "EKAP (Elektronik Kamu Alımları Platformu) — à approfondir"],
 ], font_size=8)
 doc.add_paragraph()
-add_bullet(doc, "[DONNÉE NON DISPONIBLE — aucun distributeur spécialisé \"ERP/collectivités\" dédié identifié, contrairement à des marchés plus matures (France, UK). Structure dominée par des grossistes généralistes multi-produits.]")
 
 add_heading(doc, "5.4 Dynamique et perspectives 2025-2030", 2)
-add_bullet(doc, "Marché taps & mixers en reprise attendue dès 2022 après le creux 2020-2021 (COVID + crise lire), soutenu par l'Urban Transformation Plan et l'organisme public du logement TOKİ. (BRG TR Apr21)")
-add_bullet(doc, "Durée de vie produit courte (12 ans) = driver structurel du marché RMI, indépendamment du cycle de construction neuve — facteur de résilience pour les ventes de remplacement.")
-add_bullet(doc, "Tendance vers l'électronique et le sans-contact attendue en poursuite, portée par les segments hôtels/terminaux/restaurants/écoles non-housing — mais sensible aux investissements publics et internationaux dans le non-résidentiel.")
-add_bullet(doc, "Risque majeur : volatilité de la livre turque renchérissant mécaniquement les composants et matières premières importés (énergie notamment), pression continue sur les marges fabricants malgré la hausse des prix MSP en TRY.")
+add_bullet(doc, "Marché taps & mixers en reprise attendue dès 2022 après le creux 2020-2021 (COVID + crise lire), soutenu par l'Urban Transformation Plan et l'organisme public du logement TOKİ. Volume BRG attendu : 7 157 K en 2022, 8 090 K en 2024, 8 793 K en 2025. (BRG TR Apr21, p. 100)")
+add_bullet(doc, "Durée de vie produit courte (12 ans) = driver structurel du marché RMI, indépendamment du cycle de construction neuve — facteur de résilience pour les ventes de remplacement. (BRG TR Apr21, p. 97)")
+add_bullet(doc, "Tendance vers l'électronique et le sans-contact en progression, portée par les bâtiments commerciaux (hôtels, terminaux, restaurants, écoles). Mais part de marché encore marginale. (BRG TR Apr21, p. 93)")
+add_bullet(doc, "Risque majeur : volatilité de la livre turque renchérissant les composants et matières premières importés (énergie), pression continue sur les marges fabricants malgré la hausse des prix MSP en TRY. (BRG TR Apr21, p. 96)")
+add_bullet(doc, "Distribution : shift attendu vers le DIY et l'internet, pression sur les marges des canaux traditionnels (grossistes indépendants, négoce), avec une montée en gamme progressive portée par l'augmentation du pouvoir d'achat. (BRG TR Apr21, p. 99)")
 doc.add_paragraph()
 
 # ─── PARTIE 6 ────────────────────────────────────────────────────────────────
@@ -610,7 +645,7 @@ bold_bullet(doc, "Présence Presto en Turquie", "Coordonnées exactes de représ
 doc.add_paragraph()
 
 # Sauvegarde
-path_etude = os.path.join(OUTPUT_DIR, "MAB_Turquie_EtudeV2.docx")
+path_etude = os.path.join(OUTPUT_DIR, "MAB_Turquie_EtudeV4.docx")
 doc.save(path_etude)
 print(f"✓ Étude v2 sauvegardée : {path_etude}")
 
