@@ -54,6 +54,13 @@ Ces fichiers sont dans `sources-internes/OneDrive_2_16-06-2026/` et doivent êtr
 | `FOCUS_TERTIAIRE_V2_V32.xlsx` | **Partie 4.3** (Bâtiments tertiaires) : données parc tertiaire France pour extrapolation segment tertiaire |
 | `Marché de la Robinetterie Sanitaire en France Octobre 2018.pdf` + données 2015 | **Parties 5 & 6** : données historiques marché France en complément et validation des bases de référence |
 
+### Index des fichiers BRG — consultation obligatoire
+
+Avant toute recherche ou lecture d'une étude BRG (Bathrooms Full Report), lire systématiquement :
+`sources-internes/BRG_FILENAME_INDEX.md`
+
+Ce fichier contient la correspondance entre les codes pays BRG (BE, CH, TR, etc.) et les noms de fichiers PDF exacts. **Ne jamais conclure qu'une étude BRG n'existe pas avant d'avoir vérifié cet index.**
+
 ---
 
 ## Agents et Skills à utiliser
