@@ -226,50 +226,71 @@ Segments à analyser :
 
 #### 5.1 — Taille et valeur du marché robinetterie
 
-**Deux estimations obligatoires**, toujours présentées côte à côte avec écart et commentaire.
+**Objectif de la Partie 5** : obtenir **deux tailles de marché de la robinetterie générale** dans le pays concerné, issues de **deux sources différentes** (**AFISB** et **BRG**) mais avec un **périmètre produit comparable**.
 
-**Règle prioritaire** : si des données directes sur le marché local du pays sont disponibles (dans sources-internes/ ou via recherche externe), les utiliser en priorité pour chaque estimation. Si non disponibles, appliquer la formule d'extrapolation depuis la France.
+**Règle de périmètre obligatoire** :
+- La Partie 5 porte sur la **robinetterie générale** : robinetterie salle de bains / cuisine / lavabo / douche / bain, selon les familles disponibles dans AFISB et BRG.
+- La Partie 5 ne doit **pas** utiliser les bases "robinetterie de collectivités", "ERP", "Non-Housing" ou "France ÷ 2" comme estimation principale : ces bases relèvent de la **Partie 6 — robinetterie collective ERP**.
+- Si AFISB et BRG ne couvrent pas exactement les mêmes familles produit, construire le périmètre commun le plus proche, afficher les exclusions et expliquer l'impact sur la comparabilité.
+- Si une donnée nécessaire au périmètre commun est introuvable, écrire `[DONNÉE NON DISPONIBLE — source non trouvée]` plutôt que de la remplacer par une estimation non sourcée.
 
----
+**Deux estimations obligatoires**, toujours présentées côte à côte avec écart et commentaire :
+1. Estimation 1 — marché robinetterie générale à partir des données AFISB.
+2. Estimation 2 — marché robinetterie générale à partir des données BRG.
 
-**Estimation 1 — base "données AFISB" (fichier "données Afisb" dans sources-internes/)**
-- Lire le fichier "données Afisb" dans sources-internes/
-- Extraire les données de marché pertinentes pour le périmètre robinetterie générale
-- Si données directes sur le pays disponibles : les utiliser sans extrapolation
-- Si données France uniquement : appliquer la formule d'extrapolation (coefficient X × base AFISB)
-- Afficher le calcul étape par étape
-- Mentionner la source et l'année des données AFISB utilisées
-
-**Segmentation Estimation 1 avec sections comparables :**
-
-| Section | Segment | Valeur base France | Extrapolation pays |
-|---|---|---|---|
-| **Section A1** | Robinetterie de collectivités | [valeur AFISB ÷ 2] | [× coefficient X] |
-| **Section B1** | Douches & équipements connexes | [valeur AFISB ÷ 2] | [× coefficient X] |
-| | Chasses d'eau & WC collectifs | [valeur AFISB ÷ 2] | [× coefficient X] |
-| | **TOTAL** | | |
+**Règle prioritaire** : si des données directes sur le marché local du pays sont disponibles (dans sources-internes/ ou via recherche externe), les utiliser en priorité. Si seules des données France sont disponibles dans AFISB, appliquer une extrapolation pays avec un coefficient justifié, en conservant le périmètre robinetterie générale.
 
 ---
 
-**Estimation 2 — base "Études BRG" (fichier BRG pays dans sources-internes/)**
+**Estimation 1 — base AFISB (robinetterie générale)**
+- Lire systématiquement les fichiers AFISB disponibles dans `sources-internes/` avant de rédiger :
+  - `AFISB 2021 Rapport étude de marché annuel V6 15.05.2021.pptx`
+  - `Tendance AFISB - depuis 2020 à 2025.xlsx`
+  - tout autre fichier nommé `données AFISB`, `AFISB`, ou équivalent ajouté aux sources internes
+- Extraire uniquement les données correspondant au **marché de la robinetterie générale**.
+- Reconstituer un périmètre comparable au BRG : familles lavabo / douche / bain / cuisine-évier / bidet si disponibles.
+- Ne pas utiliser les lignes ou bases "robinetterie de collectivités", "ERP", "Non-Housing", "douches & équipements connexes collectifs", "chasses d'eau & WC collectifs" pour estimer la robinetterie générale en Partie 5.
+- Si AFISB contient des données directes du pays : les utiliser sans extrapolation.
+- Si AFISB contient uniquement des données France : appliquer une extrapolation pays documentée :
+  ```
+  Estimation AFISB pays = Marché robinetterie générale AFISB France × coefficient pays
+  ```
+  Le coefficient pays doit intégrer au minimum population et PIB/habitant ; ajouter d'autres coefficients seulement s'ils sont sourcés et utiles (ex : taux d'équipement logement, niveau de construction/rénovation, urbanisation).
+- Afficher le calcul étape par étape.
+- Mentionner la source AFISB exacte, l'année des données et les familles produit incluses/exclues.
+
+**Tableau obligatoire — Estimation 1 AFISB :**
+
+| Famille produit AFISB | Volume | Valeur | Inclusion dans périmètre comparable | Source / année |
+|---|---:|---:|---|---|
+| Lavabo / washbasin | | | Oui/Non | |
+| Douche / shower | | | Oui/Non | |
+| Bain / bath | | | Oui/Non | |
+| Cuisine / évier / kitchen | | | Oui/Non | |
+| Bidet | | | Oui/Non | |
+| Autres familles AFISB | | | À justifier | |
+| **TOTAL AFISB — robinetterie générale comparable** | | | | |
+
+---
+
+**Estimation 2 — base BRG (robinetterie générale)**
 - Lire l'étude BRG correspondant au pays dans sources-internes/
-- Si données directes du marché local disponibles dans le BRG : les utiliser sans extrapolation
-- Si données France uniquement : appliquer la formule d'extrapolation
+- Utiliser les données directes du marché local BRG si disponibles.
+- Reconstituer le même périmètre que l'Estimation 1 AFISB : Bath Taps and Mixers, Shower Taps and Mixers, Kitchen Taps and Mixers, Washbasin Taps and Mixers, Bidet Taps and Mixers si inclus côté AFISB.
+- Si une famille BRG n'a pas d'équivalent AFISB exploitable, la présenter mais l'exclure du total comparable, avec justification.
 
-**Segmentation Estimation 2 avec sections comparables :**
+**Tableau obligatoire — Estimation 2 BRG :**
 
-| Section | Segment BRG | Volume (unités) | Valeur MSP | Valeur EUR |
+| Segment BRG | Volume (unités) | Valeur MSP | Valeur EUR | Inclusion dans périmètre comparable |
 |---|---|---|---|---|
-| **Section A2** | Bath Taps and Mixers | | | |
-| **Section A2** | Shower Taps and Mixers | | | |
-| **Total Section A2** | | | | |
-| **Section B2** | Kitchen Taps and Mixers | | | |
-| **Section B2** | Washbasin Taps and Mixers | | | |
-| **Total Section B2** | | | | |
-| | Bidet Taps and Mixers | | | |
-| **TOTAL BRG** | | | | |
+| Bath Taps and Mixers | | | | Oui/Non |
+| Shower Taps and Mixers | | | | Oui/Non |
+| Kitchen Taps and Mixers | | | | Oui/Non |
+| Washbasin Taps and Mixers | | | | Oui/Non |
+| Bidet Taps and Mixers | | | | Oui/Non |
+| **TOTAL BRG — robinetterie générale comparable** | | | | |
 
-> **Note de comparaison obligatoire** : Section A1 (Estimation 1) ↔ Section A2 (Estimation 2) — périmètre comparable "robinetterie sanitaire collective". Section B1 (Estimation 1) ↔ Section B2 (Estimation 2) — périmètre comparable "douches/lavabos". Afficher l'écart entre A1 et A2 d'une part, B1 et B2 d'autre part, avec commentaire explicatif.
+> **Note de comparaison obligatoire** : comparer le **TOTAL AFISB — robinetterie générale comparable** et le **TOTAL BRG — robinetterie générale comparable**. Afficher l'écart en valeur absolue et en %, puis expliquer les écarts de périmètre, d'année, de méthode (MSP vs autre valeur), de taux de change et de source.
 
 **NE PAS inclure** le tableau "Types ERP dominants dans Non-Housing" — ces données BRG ne sont pas pertinentes.
 
@@ -306,10 +327,12 @@ Segments à analyser :
 Coefficient X × Base France = Estimation marché [PAYS]
 ```
 
-**Méthode 1 — base "ANALYSE DE MARCHÉ FRANCE" / données AFISB**
-- Base France : valeur Section A1 (robinetterie de collectivités, après division par 2)
+**Méthode 1 — base France collective / données AFISB ou Analyse de Marché France**
+- Base France : valeur du marché **robinetterie collective / ERP** issue des sources internes France.
+- Cette base peut provenir d'une analyse AFISB/France spécifique "collectivités" ou d'une reconstitution interne, mais elle ne doit pas être confondue avec le total robinetterie générale de la Partie 5.
+- Si la base utilisée correspond à "robinetterie de collectivités après division par 2", l'indiquer explicitement comme **périmètre ERP/collectif**.
 - Appliquer le coefficient X
-- Appliquer un **ajustement structurel** : coefficient de variation en % calculé et justifié par Claude en fonction des variables structurelles identifiées pour ce pays (exemples : part d'économie informelle, taux d'urbanisation, maturité du marché BTP, stabilité politique, culture de rénovation vs neuf, etc.)
+- Appliquer un **ajustement structurel** : coefficient de variation en % calculé et justifié par Codex en fonction des variables structurelles identifiées pour ce pays (exemples : part d'économie informelle, taux d'urbanisation, maturité du marché BTP, stabilité politique, culture de rénovation vs neuf, etc.)
 - Afficher le calcul étape par étape
 - Justifier chaque variable retenue avec source ou raisonnement explicite
 - Mentionner : "Estimation par extrapolation avec ajustement structurel — fiabilité moyenne"
