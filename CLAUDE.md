@@ -252,6 +252,19 @@ Segments à analyser :
 - Ne pas utiliser les lignes ou bases "robinetterie de collectivités", "ERP", "Non-Housing", "douches & équipements connexes collectifs", "chasses d'eau & WC collectifs" pour estimer la robinetterie générale en Partie 5.
 - Si AFISB contient des données directes du pays : les utiliser sans extrapolation.
 - Si AFISB contient uniquement des données France : appliquer une extrapolation pays documentée :
+
+**Règle AFISB/MSI — valorisation obligatoire si AFISB volumes seulement :**
+- Si AFISB ne fournit que des volumes (sans valeur €), utiliser MSI comme
+  source complémentaire de valorisation.
+- Dans ce cas :
+  1. Nommer l'estimation : **"Estimation 1 — Base AFISB/France (valorisation MSI)"**
+  2. Ajouter impérativement, avant le calcul, la note suivante :
+     > *"Note méthodologique : AFISB fournit les familles et volumes de marché
+     France ; MSI est utilisé comme source complémentaire de valorisation faute
+     de valeur AFISB directement exploitable en montant."*
+  3. Citer MSI comme source dans le tableau Estimation 1 (colonne Source / année)
+- Cette règle s'applique à chaque nouvelle étude pays sans exception.
+
   ```
   Estimation AFISB pays = Marché robinetterie générale AFISB France × coefficient pays
   ```
