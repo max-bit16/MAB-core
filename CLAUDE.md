@@ -587,4 +587,5 @@ L'ordre suivant doit être respecté à l'identique dans le document Étude, **s
 3. **Questions de clarification** — poser toutes les questions nécessaires avant de commencer
 4. **Recherche section par section** — dans l'ordre du plan, en utilisant les agents et skills appropriés, en partant de la matière PREP
 5. **Production des documents** — générer les 2 fichiers Word en Calibri dans `pays/[pays]/outputs/`
-6. **Confirmation** — signaler la fin et lister les données non disponibles
+6. **Contrôle qualité** — exécuter `python3 scripts/check_mab_structure.py pays/[pays]/outputs/MAB_[PAYS]_Etude.docx` avant de considérer le document comme livré. Si le script retourne une erreur bloquante, corriger et relancer le contrôle avant de signaler la fin.
+7. **Confirmation** — signaler la fin et lister les données non disponibles
