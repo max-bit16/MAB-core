@@ -452,9 +452,51 @@ Section dédiée aux données incertaines ou non confirmées, à revalider :
 
 ## Format des documents
 
+### Page de garde obligatoire (Étude ET Annexes)
+
+Chaque document (`MAB_[PAYS]_Etude.docx` et `MAB_[PAYS]_Annexes.docx`) démarre par une page de garde dédiée, sur sa propre page (saut de page après), avant tout autre contenu :
+
+- **Titre** (style Word "Titre"/Title, centré, ~26pt, bordure inférieure bleue intégrée) :
+  - Étude : `MAB [PAYS] — ÉTUDE DE MARCHÉ`
+  - Annexes : `MAB [PAYS] — ANNEXES`
+- **Sous-titre** (centré, ~12pt) : `Robinetterie sanitaire collective / ERP — Les Robinets Presto`
+- **Date** (centrée, italique) : mois + année de génération (ex. *Juin 2026*)
+- Saut de page obligatoire après la page de garde — le contenu (Résumé Exécutif pour l'Étude, Annexe 1 pour les Annexes) démarre en page 2
+
+Référence de structure validée : `pays/roumanie/outputs/MAB_Roumanie_EtudeV4_mise_en_page.docx` — à utiliser comme gabarit de mise en forme pour tout nouveau pays.
+
+### Ordre des sections — strict et non négociable
+
+L'ordre suivant doit être respecté à l'identique dans le document Étude, **sans exception et sans duplication** :
+
+```
+1. Page de garde
+2. RÉSUMÉ EXÉCUTIF
+3. PARTIE 1 — Overview contexte pays
+4. PARTIE 2 — Marché de la construction
+5. PARTIE 3 — Construction non-résidentielle
+6. PARTIE 4 — Poids des segments ERP
+7. PARTIE 5 — Taille marché : Robinetterie générale
+8. PARTIE 6 — Taille marché : Robinetterie collective
+9. PARTIE 7 — Concurrents
+10. PARTIE 8 — Normes & Certifications robinetterie
+11. PARTIE 9 — Points à revérifier
+```
+
+**Règle anti-duplication** : si une partie est réécrite, enrichie ou regénérée après une première version (ex. relance ciblée sur Concurrents/Normes), la nouvelle version **remplace** l'ancienne à son emplacement d'origine dans le plan — elle n'est jamais insérée en tête de document ni ajoutée en plus. Avant de livrer un document, vérifier qu'aucun titre de partie (`PARTIE 1` à `PARTIE 9`, `RÉSUMÉ EXÉCUTIF`) n'apparaît plus d'une fois.
+
+**Incident de référence** : la V4 de l'étude Roumanie a été générée avec les Parties 7 et 8 enrichies collées en tête de document (avant la page de garde et le Résumé Exécutif), tandis que leurs anciennes versions courtes restaient dupliquées à leur emplacement d'origine — produisant une page blanche, un Résumé Exécutif en milieu de document, et un doublon complet des Parties 7/8. Cette règle existe pour empêcher la récurrence de ce problème.
+
+### Style visuel
+
+- Police : **Calibri** pour tout le document (titres et corps de texte), sur l'Étude comme sur les Annexes
+- Titres de parties (Heading1/Titre1) : bleu foncé `365F91` ou équivalent, ~14pt, gras
+- Sous-titres (Heading2/Titre2) : bleu `4F81BD` ou équivalent, ~13pt, gras
+- Tableaux : en-tête sur fond bleu marine, texte blanc, bordures fines grises
+- **Aucun emoji ni pictogramme** dans le corps du texte (y compris pour signaler un point d'alerte). Pour mettre en exergue un point clé ou un risque, utiliser un texte en gras, éventuellement en couleur (ex. rouge `CC0000`), introduit par un intitulé textuel explicite (ex. "Point clé :", "Point de vigilance :") — jamais de symbole ou autre pictogramme Unicode
+
 **Document principal (MAB_[PAYS]_Etude.docx)**
-- Police : **Calibri** pour tout le document (titres et corps de texte)
-- Résumé exécutif en tête de document (demi-page max)
+- Résumé exécutif en tête de document, juste après la page de garde (demi-page max)
 - Saut de page avant chaque nouvelle partie
 - Style : bullet points courts, textes concis
 - Quanti ET quali pour chaque partie
@@ -463,7 +505,6 @@ Section dédiée aux données incertaines ou non confirmées, à revalider :
 - Aller straight to the point : dégager les messages essentiels et enseignements au-delà des données brutes
 
 **Document annexes (MAB_[PAYS]_Annexes.docx)**
-- Police : **Calibri** pour tout le document
 - Liste complète de toutes les sources utilisées (URL, date de consultation, langue originale)
 - Données complémentaires et détails non inclus dans le doc principal
 - Tableaux de données brutes si disponibles
